@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VerificacionController;
 use App\Http\Controllers\OrdenController;
+use App\Http\Controllers\CorrectivoController;
 
 
 /*
@@ -24,3 +25,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('/verificacion/{id}/departamento', [VerificacionController::class, 'byDepartament']); 
 Route::get('/orden/{id}/departamento', [OrdenController::class, 'byDepartament']); 
 Route::get('/orden/{id}/usuario', [OrdenController::class, 'byUser']); 
+Route::get('/equipo/{id}/inventario', [CorrectivoController::class, 'byEquipo']); 

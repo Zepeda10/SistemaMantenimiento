@@ -168,7 +168,7 @@ class OrdenController extends Controller
 
     public function byDepartament($id)
     {
-        return Equipo::where('departamento_id', $id)->get();
+        return Equipo::where('departamento_id', $id)->get()->unique('nombre');
     }
 
     public function byUser($id)

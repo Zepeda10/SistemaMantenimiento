@@ -29,4 +29,9 @@ class Equipo extends Model
     {
         return $this->belongsToMany('App\Models\Orden');
     }
+
+    //Relación uno a muchos
+    public function correctivo(){
+    	return $this->hasMany('App\Models\Correctivo');
+    }
 }

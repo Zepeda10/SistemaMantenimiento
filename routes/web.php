@@ -9,6 +9,8 @@ use App\Http\Controllers\VerificacionController;
 use App\Http\Controllers\OrdenController;
 use App\Http\Controllers\CronogramaPreventivoController;
 use App\Http\Controllers\CalendarioPreventivoController;
+use App\Http\Controllers\CalendarioCorrectivoController;
+use App\Http\Controllers\CorrectivoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +44,7 @@ Route::resource('admin/telecomunicaciones',TelecomunicacionController::class);
 Route::resource('admin/verificaciones',VerificacionController::class);
 Route::resource('admin/ordenes',OrdenController::class);
 Route::resource('admin/oficios',CronogramaPreventivoController::class);
+Route::resource('admin/correctivo',CorrectivoController::class);
 
 Route::get('admin/internet', [TelecomunicacionController::class, 'internet'])->name('admin.internet'); 
 Route::get('admin/correo', [TelecomunicacionController::class, 'correo'])->name('admin.correo'); 
@@ -53,6 +56,13 @@ Route::get('admin/agregar-telefono', [TelecomunicacionController::class, 'formTe
 
 Route::get('admin/cronograma', [CalendarioPreventivoController::class, 'index'])->name('admin.cronograma'); 
 Route::get('admin/cronograma/{month}', [CalendarioPreventivoController::class, 'index_month']);
+
+Route::get('admin/lista-correctivos', [CorrectivoController::class, 'correctivos'])->name('correctivo.listacorrectivo'); 
+
+Route::get('admin/cronograma-correctivo', [CalendarioCorrectivoController::class, 'index'])->name('correctivo.cronograma'); 
+Route::get('admin/cronograma-correctivo/{month}', [CalendarioCorrectivoController::class, 'index_month']);
+Route::get('admin/cronograma-actualizar-fecha/{id}', [CalendarioCorrectivoController::class, 'actualizar_fecha'])->name('cronograma.addfecha'); 
+
 
 
 

@@ -50,4 +50,9 @@ class Departamento extends Model
     public function cronograma(){
     	return $this->hasMany('App\Models\CronogramaPreventivo');
     }
+
+    //Relación uno a muchos
+    public function correctivo(){
+    	return $this->hasMany('App\Models\Correctivo');
+    }
 }

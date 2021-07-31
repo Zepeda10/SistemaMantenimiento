@@ -9,17 +9,24 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 </head>
 
-<body>
+<style>
+    .efecto:hover{
+        border-bottom: 2px solid #3861A5;
+        padding-bottom: 1px;
+    }
+</style>
 
+<body>
+    
     <nav class="navbar navbar-light navbar-expand-lg mb-5" style="background-color: #1b396a;">
         <div class="container">
-            <a class="navbar-brand mr-auto text-white" href="{{route('verificaciones.index')}}">Mantenimiento Preventivo</a>
-            <a class="navbar-brand mr-auto text-white" href="#">Mantenimiento Correctivo</a>
-            <a class="navbar-brand mr-auto text-white" href="{{route('telecomunicaciones.index')}}">Telecomunicaciones</a>
-            <a class="navbar-brand mr-auto text-white" href="#">Activos</a>
-            <a class="navbar-brand mr-auto text-white" href="{{route('usuarios.index')}}">Usuarios</a>
-            <a class="navbar-brand mr-auto text-white" href="{{route('solicitudes.index')}}">Solicitudes de acceso</a>
-            <a class="navbar-brand mr-auto text-white" href="{{route('dashboard')}}">{{Auth::user()->usuario}}</a>
+            <a class="navbar-brand mr-auto text-white efecto" href="{{route('verificaciones.index')}}">Mantenimiento Preventivo</a>
+            <a class="navbar-brand mr-auto text-white efecto" href="{{route('correctivo.index')}}">Mantenimiento Correctivo</a>
+            <a class="navbar-brand mr-auto text-white efecto" href="{{route('telecomunicaciones.index')}}">Telecomunicaciones</a>
+            <a class="navbar-brand mr-auto text-white efecto" href="#">Activos</a>
+            <a class="navbar-brand mr-auto text-white efecto" href="{{route('usuarios.index')}}">Usuarios</a>
+            <a class="navbar-brand mr-auto text-white efecto" href="{{route('solicitudes.index')}}">Solicitudes de acceso</a>
+            <a class="navbar-brand mr-auto text-white efecto" href="{{route('dashboard')}}">{{Auth::user()->usuario}}</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -44,6 +51,7 @@
     </nav>
 
     @yield('content')
+
 
 
 </body>
