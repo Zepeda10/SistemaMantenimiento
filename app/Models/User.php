@@ -61,4 +61,9 @@ class User extends Authenticatable
     public function ordenes(){
     	return $this->hasMany('App\Models\Orden');
     }
+
+    //Relación uno a muchos
+    public function ordenes_correctivo(){
+    	return $this->hasMany('App\Models\OrdenCorrectivo');
+    }
 }

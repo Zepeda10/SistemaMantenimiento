@@ -55,4 +55,6 @@ class Departamento extends Model
     public function correctivo(){
     	return $this->hasMany('App\Models\Correctivo');
     }
+
+    
 }

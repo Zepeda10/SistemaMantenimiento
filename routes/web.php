@@ -11,6 +11,8 @@ use App\Http\Controllers\CronogramaPreventivoController;
 use App\Http\Controllers\CalendarioPreventivoController;
 use App\Http\Controllers\CalendarioCorrectivoController;
 use App\Http\Controllers\CorrectivoController;
+use App\Http\Controllers\OrdenCorrectivoController;
+use App\Http\Controllers\GraficaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,6 +47,8 @@ Route::resource('admin/verificaciones',VerificacionController::class);
 Route::resource('admin/ordenes',OrdenController::class);
 Route::resource('admin/oficios',CronogramaPreventivoController::class);
 Route::resource('admin/correctivo',CorrectivoController::class);
+Route::resource('admin/orden-correctivo',OrdenCorrectivoController::class);
+Route::resource('admin/graficos',GraficaController::class);
 
 Route::get('admin/internet', [TelecomunicacionController::class, 'internet'])->name('admin.internet'); 
 Route::get('admin/correo', [TelecomunicacionController::class, 'correo'])->name('admin.correo'); 

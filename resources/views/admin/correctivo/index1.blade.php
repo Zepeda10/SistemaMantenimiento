@@ -45,7 +45,7 @@
             </div>
             <div class="card-group">
                 <div class="card border-0 contenido">
-                    <a href="{{route('admin.internet')}}">
+                    <a href="{{route('orden-correctivo.show',1)}}">
                         <img src="/images/generar-trabajo.png" style="width: 150px;" alt="Card image cap">
                     </a>
                     <div class="card-body" style="width: 210px;">
@@ -53,7 +53,7 @@
                     </div>
                 </div>
                 <div class="card border-0 contenido">
-                    <a href="{{route('admin.correo')}}">
+                    <a href="{{route('orden-correctivo.index')}}">
                         <img src="/images/lista-trabajo.png" style="width: 145px;" alt="Card image cap">
                     </a>
                     <div class="card-body" style="width: 210px;">
@@ -61,7 +61,7 @@
                     </div>
                 </div>
                 <div class="card border-0 contenido">
-                    <a href="{{route('admin.telefono')}}">
+                    <a href="{{route('graficos.index')}}">
                         <img src="/images/graficas.png" style="width: 150px;" alt="Card image cap">
                     </a>
                     <div class="card-body" style="width: 210px;">

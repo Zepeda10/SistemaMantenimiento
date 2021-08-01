@@ -27,4 +27,10 @@ class Correctivo extends Model
      public function equipo(){
         return $this->belongsTo('App\Models\Equipo');
     }
+
+    //Relación uno a muchos
+    public function ordenes(){
+    	return $this->hasMany('App\Models\OrdenCorrectivo');
+    }
+
 }
