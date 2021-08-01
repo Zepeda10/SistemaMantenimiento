@@ -23,7 +23,7 @@
             <a class="navbar-brand mr-auto text-white efecto" href="{{route('verificaciones.index')}}">Mantenimiento Preventivo</a>
             <a class="navbar-brand mr-auto text-white efecto" href="{{route('correctivo.index')}}">Mantenimiento Correctivo</a>
             <a class="navbar-brand mr-auto text-white efecto" href="{{route('telecomunicaciones.index')}}">Telecomunicaciones</a>
-            <a class="navbar-brand mr-auto text-white efecto" href="#">Activos</a>
+            <a class="navbar-brand mr-auto text-white efecto" href="{{route('equipos.index')}}">Activos</a>
             <a class="navbar-brand mr-auto text-white efecto" href="{{route('usuarios.index')}}">Usuarios</a>
             <a class="navbar-brand mr-auto text-white efecto" href="{{route('solicitudes.index')}}">Solicitudes de acceso</a>
             <a class="navbar-brand mr-auto text-white efecto" href="{{route('dashboard')}}">{{Auth::user()->usuario}}</a>

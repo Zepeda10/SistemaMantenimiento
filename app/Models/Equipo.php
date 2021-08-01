@@ -10,7 +10,11 @@ class Equipo extends Model
     use HasFactory;
     protected $fillable = [
         'nombre',
+        'marca',
+        'modelo',
+        'noInventario',
         'departamento_id',
+        'estado',
     ];
 
     //Relación uno a muchos inversa
@@ -33,5 +37,20 @@ class Equipo extends Model
     //Relación uno a muchos
     public function correctivo(){
     	return $this->hasMany('App\Models\Correctivo');
+    }
+
+    //Relación uno a muchos
+    public function orden(){
+    	return $this->hasMany('App\Models\OrdenEquipo');
+    }
+
+    //Relación uno a muchos
+    public function imgEquipo(){
+    	return $this->hasMany('App\Models\ImgEquipo');
+    }
+
+    //Relación uno a muchos
+    public function imgCompu(){
+    	return $this->hasMany('App\Models\ImgCompu');
     }
 }
