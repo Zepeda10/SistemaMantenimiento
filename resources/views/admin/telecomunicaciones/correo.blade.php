@@ -1,3 +1,7 @@
+@if (Auth::user()->cargo!="Administrador")
+	<script>window.location = "/dashboard";</script>
+@endif
+
 @extends('dashboard')
 @section('title', 'Correo')
 @section('content')

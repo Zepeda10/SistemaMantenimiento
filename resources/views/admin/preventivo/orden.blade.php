@@ -1,3 +1,7 @@
+@if (Auth::user()->cargo!="Administrador")
+	<script>window.location = "/dashboard";</script>
+@endif
+
 @extends('dashboard')
 @section('title', 'Órdenes')
 @section('content')
@@ -62,11 +66,15 @@
 <div class="contenido">
     <h2 class="text-center">Órdenes</h2>
 
-	<button class="btn btn-primary d-inline-block my-3"><a href="{{route('verificaciones.index')}}" class="text-decoration-none text-white">Verificaciones</a></button>
-	<button class="btn btn-primary d-inline-block my-3"><a href="{{route('admin.cronograma')}}" class="text-decoration-none text-white">Cronograma</a></button>
-	<button class="btn btn-primary d-inline-block my-3"><a href="{{route('oficios.index')}}" class="text-decoration-none text-white">Oficios</a></button>
-	<button class="btn btn-primary d-inline-block my-3"><a href="{{route('ordenes.index')}}" class="text-decoration-none text-white">Órdenes</a></button>
-	<div class="d-block"></div>
+	@if (Auth::user()->cargo=="Administrador")
+
+	    <button class="btn btn-primary d-inline-block my-3"><a href="{{route('verificaciones.index')}}" class="text-decoration-none text-white">Verificaciones</a></button>
+	    <button class="btn btn-primary d-inline-block my-3"><a href="{{route('admin.cronograma')}}" class="text-decoration-none text-white">Cronograma</a></button>
+	    <button class="btn btn-primary d-inline-block my-3"><a href="{{route('oficios.index')}}" class="text-decoration-none text-white">Oficios</a></button>
+	    <button class="btn btn-primary d-inline-block my-3"><a href="{{route('ordenes.index')}}" class="text-decoration-none text-white">Órdenes</a></button>
+	    <div class="d-block"></div>
+
+    @endif
 
     <button class="boton-regresar">
         <a class="text-decoration-none text-white" href="{{route('dashboard')}}">

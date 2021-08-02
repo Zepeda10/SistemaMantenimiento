@@ -94,18 +94,12 @@
 			<p class="d-inline" style="margin-left:5px;">Regresar</p>
 		</a>
     </button>
+    @if (Auth::user()->cargo=="Administrador")
+      <button class="boton-verde" style="margin-left:15px;">
+          <a class="text-decoration-none text-white" href="{{route('cronograma.addfecha',1)}}">Actualizar fecha</a>
+      </button>
+    @endif
 
-    <button class="boton-verde" style="margin-left:15px;">
-        <a class="text-decoration-none text-white" href="{{route('cronograma.addfecha',1)}}">Actualizar fecha</a>
-    </button>
-
-    <div class="col-md-2 d-inline-block">
-      <input type="month" name="mes" id="mounth" class="form-control border border-secondary">
-    </div>
-
-    <button class="boton-verde" style="margin-left:15px;">
-        <a class="text-decoration-none text-white" href="{{route('correctivo.cronogramames', 'july')}}">Ir a mes</a>
-    </button>
 
     <div class="container">
       <div style="height:50px"></div>
