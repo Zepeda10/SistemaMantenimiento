@@ -17,7 +17,7 @@
             <div class="card">
                 <h3 class="card-header text-center">Agregar Oficio</h3>
                 <div class="card-body">
-                    <form action="{{route('oficios.store')}}" method="post" accept-charset="utf-8">
+                    <form action="{{route('oficios.store')}}" method="post" id="formulario" accept-charset="utf-8">
                         @csrf
                         <div class="row">
                             <div class="col">
@@ -49,7 +49,15 @@
                         </div>
                 
                         <div class="d-grid mx-auto">
-                            <button class="btn btn-success btn-block" type="submit" class="btn-enviar" name="enviar">Agregar</button>
+                            <button class="btn btn-success btn-block" type="submit" class="btn-enviar" id="enviar" name="enviar">Agregar</button>
+                        </div>
+                    </form>
+
+
+                    <form action="{{route('enviar.correo')}}" method="post" id="frm" accept-charset="utf-8">
+                    @csrf
+                        <div class="d-grid mx-auto mt-2">
+                            <button class="btn btn-dark btn-block" type="submit" name="correo">Enviar correo</button>
                         </div>
                     </form>
                 </div>
@@ -61,6 +69,16 @@
 
 
 <script>
+        $('#formulario').submit(function (ev) {
+            $.ajax({
+                type: $('#formulario').attr('method'), 
+                url: $('#formulario').attr('action'),
+                data: $('#formulario').serialize(),
+                success: function (data) { alert('Información enviada'); } 
+            });
+            ev.preventDefault();
+        });
+
     
         let agregar = document.getElementById('agregar');
         let contenido = document.getElementById('contenedor');

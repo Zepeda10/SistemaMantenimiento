@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Departamento;
 use App\Models\Equipo;
 use App\Models\VerificacionEquipo;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class VerificacionController extends Controller
 {
@@ -84,10 +85,17 @@ class VerificacionController extends Controller
      */
     public function show($id)
     {
+        $data = [
+            'titulo' => 'Anexo 9.1 Lista de Verificación de Infraestructura y Equipo.',
+            'date' => date('m/d/Y')
+        ];
+
         $verificacion = Verificacion::find($id);
         $equipos = Equipo::all();
         $detalle = VerificacionEquipo::where('verificacion_id', $id)->get();
-        return view("admin.preventivo.show_verificaciones",compact("detalle","verificacion","equipos"));
+    
+        return PDF::loadView("admin.preventivo.show_verificaciones",compact("detalle","verificacion","equipos"), $data)
+            ->stream('archivo.pdf');
     }
 
     /**

@@ -10,6 +10,8 @@ use App\Models\User;
 use App\Models\Equipo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade as PDF;
+
 
 
 class OrdenController extends Controller
@@ -141,11 +143,19 @@ class OrdenController extends Controller
      */
     public function show($id)
     {
+        $data = [
+            'titulo' => 'Orden de Trabajo de Preventivo',
+            'date' => date('m/d/Y')
+        ];
+
         $orden = Orden::find($id);
         $equipos = Equipo::all();
         $imagenes = OrdenImagen::where('orden_id', $id)->get();
         $detalle = OrdenEquipo::where('orden_id', $id)->get();
-        return view("admin.preventivo.show_ordenes",compact("detalle","orden","equipos","imagenes"));
+    
+        return PDF::loadView("admin.preventivo.show_ordenes",compact("detalle","orden","equipos","imagenes"), $data)
+            ->stream('archivo.pdf');
+        
     }
 
     /**
@@ -191,4 +201,5 @@ class OrdenController extends Controller
     {
         return User::where('id', $id)->get();
     }
+
 }

@@ -7,6 +7,7 @@ use App\Models\Correctivo;
 use App\Models\User;
 use App\Models\Departamento;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class OrdenCorrectivoController extends Controller
 {
@@ -143,8 +144,15 @@ class OrdenCorrectivoController extends Controller
      */
     public function edit($id)
     {
+        $data = [
+            'titulo' => 'Orden de mantenimiento correctivo',
+            'date' => date('m/d/Y')
+        ];
+
         $orden = OrdenCorrectivo::find($id);
-        return view("admin.correctivo.show_ordenes",compact("orden"));
+    
+        return PDF::loadView("admin.correctivo.show_ordenes",compact("orden"), $data)
+            ->stream('archivo.pdf'); 
     }
 
     /**

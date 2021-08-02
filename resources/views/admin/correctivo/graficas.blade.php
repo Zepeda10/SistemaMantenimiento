@@ -1,6 +1,7 @@
 @extends('dashboard')
 @section('title', 'Cronograma')
 @section('content')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
 
 <style>
 	.contenido{
@@ -76,6 +77,10 @@
 		</a>
     </button>
 
+    <button class="boton-rojo d-inline-block">
+        <a href="#"  id="downloadPdf" class="text-decoration-none text-white">PDF</a>
+    </button>
+
     <form id="form" action="{{route('graficos.index',$buscar,$departamentos)}}" method="get" class="mt-2 mb-5">
         <div class="row mb-4">
             <div class="col">
@@ -100,10 +105,13 @@
         </div>
 	</form>
 
+
     <div class="container">
+    <div id="reportPage">
         <div class="row col-6" style="margin:auto;">
             <canvas id="myChart" width="400" height="400"></canvas>
         </div>
+    </div>
         
 
     </div> <!-- /container -->
@@ -170,6 +178,58 @@
                 }
             }
         }
+    });
+
+
+
+    $('#downloadPdf').click(function(event) {
+        // get size of report page
+        var reportPageHeight = $('#reportPage').innerHeight();
+        var reportPageWidth = $('#reportPage').innerWidth();
+        
+        // create a new canvas object that we will populate with all other canvas objects
+        var pdfCanvas = $('<canvas />').attr({
+            id: "canvaspdf",
+            width: reportPageWidth,
+            height: reportPageHeight
+        });
+        
+        // keep track canvas position
+        var pdfctx = $(pdfCanvas)[0].getContext('2d');
+        var pdfctxX = 0;
+        var pdfctxY = 0;
+        var buffer = 100;
+        
+        // for each chart.js chart
+        $("canvas").each(function(index) {
+            // get the chart height/width
+            var canvasHeight = $(this).innerHeight();
+            var canvasWidth = $(this).innerWidth();
+            
+            // draw the chart into the new canvas
+            pdfctx.drawImage($(this)[0], pdfctxX, pdfctxY, canvasWidth, canvasHeight);
+            pdfctxX += canvasWidth + buffer;
+            
+            // our report page is in a grid pattern so replicate that in the new canvas
+            if (index % 2 === 1) {
+            pdfctxX = 0;
+            pdfctxY += canvasHeight + buffer;
+            }
+        });
+        
+        const tiempoTranscurrido = Date.now();
+        const hoy = new Date(tiempoTranscurrido);
+
+        // create new pdf and add our new canvas as an image
+        var pdf = new jsPDF('l', 'pt', [reportPageWidth, reportPageHeight]);
+        pdf.setFontSize(20);
+        pdf.text(100, 80, "Gráfica de Mantenimientos");
+        pdf.setFontSize(15);
+        pdf.text(100, 110, "Fecha: "+hoy.toLocaleDateString());
+        pdf.addImage($(pdfCanvas)[0], 'PNG', 500,100);
+        
+        // download the pdf
+        pdf.save('grafica.pdf');
     });
 </script>
 @endsection

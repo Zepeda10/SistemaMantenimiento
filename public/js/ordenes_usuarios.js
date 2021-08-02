@@ -5,7 +5,7 @@ $('#user_id').on('change', function(){
 	// AJAX
 	$.get('/api/orden/'+user_id+'/usuario', function (data) {
 		for (var i=0; i<data.length; ++i)
-			$('#name').val(data[i].name);
+			$('#name').val(data[i].name+' '+data[i].ap_paterno+' '+data[i].ap_materno);
 	});
     
 });

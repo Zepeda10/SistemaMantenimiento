@@ -66,10 +66,10 @@ Route::get('admin/cronograma/{month}', [CalendarioPreventivoController::class, '
 Route::get('admin/lista-correctivos', [CorrectivoController::class, 'correctivos'])->name('correctivo.listacorrectivo'); 
 
 Route::get('admin/cronograma-correctivo', [CalendarioCorrectivoController::class, 'index'])->name('correctivo.cronograma'); 
-Route::get('admin/cronograma-correctivo/{month}', [CalendarioCorrectivoController::class, 'index_month']);
+Route::get('admin/cronograma-correctivo/{month}', [CalendarioCorrectivoController::class, 'index_month'])->name('correctivo.cronogramames');
 Route::get('admin/cronograma-actualizar-fecha/{id}', [CalendarioCorrectivoController::class, 'actualizar_fecha'])->name('cronograma.addfecha'); 
 
-
+Route::post('enviar-correo', [CronogramaPreventivoController::class, 'enviarCorreo'])->name('enviar.correo'); 
 
 
 //Route::post('Evento/calendario', [CalendarioPreventivoController::class, 'calendario']); 
