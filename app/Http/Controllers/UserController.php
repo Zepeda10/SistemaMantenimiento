@@ -13,12 +13,28 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $usuarios = User::paginate(8);
-        $departamentos = Departamento::all();
-        return view("admin.usuarios.index",compact("usuarios","departamentos")); 
-        //echo $usuarios->departamentos->nombre;
+        if($request){
+            $departamentos = Departamento::all();
+            $departamento = trim($request->get('departamento_id'));
+
+            if($departamento){
+                $usuarios = User::where('departamento_id', '=', $departamento)
+                        ->orderBy('id','asc')
+                        ->paginate(8);
+
+                
+               return view("admin.usuarios.index",compact("usuarios","departamentos")); 
+
+            }else if(!$departamento or $departamento==0){
+                $usuarios = User::paginate(8);
+                $departamentos = Departamento::all();
+               // return "dos";
+                return view("admin.usuarios.index",compact("usuarios","departamentos")); 
+            }
+            
+        }
     }
 
     /**

@@ -15,11 +15,41 @@ class RegistroController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $registros = Registro::paginate(8);
-        $departamentos = Departamento::all();
-        return view("admin.registros.index",compact("registros","departamentos")); 
+
+        if($request){
+            $departamentos = Departamento::all();
+            $buscar = trim($request->get('buscar'));
+            $departamento = trim($request->get('departamento_id'));
+             
+            if($buscar and $departamento==0){
+                $registros = Registro::where('created_at','>=', $buscar.' 00:00:00')
+                        ->where('created_at','<=', $buscar.' 23:59:59')
+                        ->orderBy('id','asc')
+                        ->paginate(8);
+                        
+                return view("admin.registros.index",compact("registros","departamentos","buscar"));
+
+            }else if($buscar and $departamento){
+                $registros = Registro::where([['created_at','>=', $buscar.' 00:00:00'],['created_at','<=', $buscar.' 23:59:59'], ['departamento_id', 'LIKE', '%'.$departamento.'%']])
+                        ->orderBy('id','asc')
+                        ->paginate(8);
+                return view("admin.registros.index",compact("registros","departamentos","buscar"));
+ 
+            }else if(!$buscar and $departamento){
+                $registros = Registro::where('departamento_id', 'LIKE', '%'.$departamento.'%')
+                        ->orderBy('id','asc')
+                        ->paginate(10);
+                return view("admin.registros.index",compact("registros","departamentos","buscar"));
+
+            }else if(!$buscar and !$departamento){
+                $departamentos = Departamento::all();
+                $registros = Registro::paginate(8);
+                        
+                return view("admin.registros.index",compact("registros","departamentos","buscar"));
+            }   
+        }
     }
 
     /**

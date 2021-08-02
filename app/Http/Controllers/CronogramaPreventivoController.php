@@ -15,16 +15,40 @@ class CronogramaPreventivoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $oficios = CronogramaPreventivo::paginate(8);
-        $departamentos = Departamento::all();
-        $fechas = cronogramaFecha::
-            join('cronograma_preventivos', 'cronograma_preventivos.id', '=', 'cronograma_fechas.cronograma_preventivo_id')
-            ->join('fechas_preventivos', 'fechas_preventivos.id', '=', 'cronograma_fechas.fechas_preventivo_id')
-            ->select('fechas_preventivos.fecha','cronograma_fechas.cronograma_preventivo_id')
-            ->get();
-        return view("admin.preventivo.oficios",compact("oficios","departamentos","fechas")); 
+        if($request){
+            $departamentos = Departamento::all();
+            $departamento = trim($request->get('departamento_id'));
+
+            if($departamento){
+                $oficios = CronogramaPreventivo::where('departamento_id', '=', $departamento)
+                        ->orderBy('id','asc')
+                        ->paginate(8);
+
+                $fechas = cronogramaFecha::
+                        join('cronograma_preventivos', 'cronograma_preventivos.id', '=', 'cronograma_fechas.cronograma_preventivo_id')
+                        ->join('fechas_preventivos', 'fechas_preventivos.id', '=', 'cronograma_fechas.fechas_preventivo_id')
+                        ->select('fechas_preventivos.fecha','cronograma_fechas.cronograma_preventivo_id')
+                        ->get();
+
+                
+                return view("admin.preventivo.oficios",compact("oficios","departamentos","fechas")); 
+
+            }else if(!$departamento or $departamento==0){
+                $oficios = CronogramaPreventivo::paginate(8);
+                $departamentos = Departamento::all();
+
+                $fechas = cronogramaFecha::
+                join('cronograma_preventivos', 'cronograma_preventivos.id', '=', 'cronograma_fechas.cronograma_preventivo_id')
+                ->join('fechas_preventivos', 'fechas_preventivos.id', '=', 'cronograma_fechas.fechas_preventivo_id')
+                ->select('fechas_preventivos.fecha','cronograma_fechas.cronograma_preventivo_id')
+                ->get();
+              
+                return view("admin.preventivo.oficios",compact("oficios","departamentos","fechas")); 
+            }
+            
+        }
     }
 
     /**

@@ -122,9 +122,44 @@ class CorrectivoController extends Controller
         return Equipo::where('nombre', $nombre->nombre)->get();
     }
 
-    public function correctivos(){
+    public function correctivos(Request $request){
+        /*
         $departamentos = Departamento::all();
         $datos = Correctivo::paginate(8);
         return view("admin.correctivo.solicitudes_correctivo",compact("datos","departamentos")); 
+        */
+
+        if($request){
+            $departamentos = Departamento::all();
+            $buscar = trim($request->get('buscar'));
+            $departamento = trim($request->get('departamento_id'));
+             
+            if($buscar and $departamento==0){
+                $datos = Correctivo::where('fecha','=', $buscar)
+                        ->orderBy('id','asc')
+                        ->paginate(8);
+                        
+                return view("admin.correctivo.solicitudes_correctivo",compact("datos","departamentos","buscar"));
+
+            }else if($buscar and $departamento){
+                $datos = Correctivo::where([['fecha','=', $buscar], ['departamento_id', 'LIKE', '%'.$departamento.'%']])
+                        ->orderBy('id','asc')
+                        ->paginate(8);
+                return view("admin.correctivo.solicitudes_correctivo",compact("datos","departamentos","buscar"));
+ 
+            }else if(!$buscar and $departamento){
+                $datos = Correctivo::where('departamento_id', 'LIKE', '%'.$departamento.'%')
+                        ->orderBy('id','asc')
+                        ->paginate(10);
+                return view("admin.correctivo.solicitudes_correctivo",compact("datos","departamentos","buscar"));
+
+            }else if(!$buscar and !$departamento){
+                $departamentos = Departamento::all();
+                $datos = Correctivo::paginate(8);
+                        
+                return view("admin.correctivo.solicitudes_correctivo",compact("datos","departamentos","buscar"));
+            } 
+             
+        }
     }
 }

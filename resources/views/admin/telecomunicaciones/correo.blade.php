@@ -71,20 +71,23 @@
 		</a>
     </button>
 
-	<form id="form" action="#" method="POST" class="mt-2 mb-5">
-        <div class="row mb-4">
-            <div class="col">
-				<select class="form-control" name="departamento_id">
-					@foreach($departamentos as $departamento)
-						<option value="{{ $departamento->id }}">{{ $departamento->nombre }}</option>
-					@endforeach
-				</select>
-            </div>
-			<div class="col">
-				<button type="submit" class="btn btn-secondary d-inline">Buscar</button>
+	<div class="col-md-7">
+		<form id="form" action="{{route('admin.correo')}}" method="get" class="mt-2 mb-5">
+			<div class="row mb-4">
+				<div class="col">
+					<select class="form-control" name="departamento_id">
+						<option value="0">Seleccionar departamento</option>
+						@foreach($departamentos as $departamento)
+							<option value="{{ $departamento->id }}">{{ $departamento->nombre }}</option>
+						@endforeach
+					</select>
+				</div>
+				<div class="col">
+					<button type="submit" class="btn btn-secondary d-inline">Buscar</button>
+				</div>
 			</div>
-        </div>
-	</form>
+		</form>
+	</div>
 
     <table class="table">
         <thead>

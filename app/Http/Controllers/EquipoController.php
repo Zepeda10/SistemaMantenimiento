@@ -15,11 +15,45 @@ class EquipoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        /*
         $departamentos = Departamento::all();
         $equipos = Equipo::paginate(8);
         return view("admin.equipos.index",compact("departamentos","equipos")); 
+        */
+        if($request){
+            $departamentos = Departamento::all();
+            $buscar = trim($request->get('estado'));
+            $departamento = trim($request->get('departamento_id'));
+             
+            if($buscar and $departamento==0){
+                $equipos = Equipo::where('estado','=', $buscar)
+                        ->orderBy('id','asc')
+                        ->paginate(8);
+                        
+                return view("admin.equipos.index",compact("equipos","departamentos","buscar"));
+
+            }else if($buscar and $departamento){
+                $equipos = Equipo::where([['estado','=', $buscar], ['departamento_id', 'LIKE', '%'.$departamento.'%']])
+                        ->orderBy('id','asc')
+                        ->paginate(8);
+                return view("admin.equipos.index",compact("equipos","departamentos","buscar"));
+ 
+            }else if(!$buscar and $departamento){
+                $equipos = Equipo::where('departamento_id', 'LIKE', '%'.$departamento.'%')
+                        ->orderBy('id','asc')
+                        ->paginate(10);
+                return view("admin.equipos.index",compact("equipos","departamentos","buscar"));
+
+            }else if(!$buscar and !$departamento ){
+                $departamentos = Departamento::all();
+                $equipos = Equipo::paginate(8);
+                        
+                return view("admin.equipos.index",compact("equipos","departamentos","buscar"));
+            } 
+             
+        }
     }
 
     /**

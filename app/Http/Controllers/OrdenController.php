@@ -19,11 +19,27 @@ class OrdenController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $ordenes = Orden::paginate(8);
-        $departamentos = Departamento::all();
-        return view("admin.preventivo.orden",compact("ordenes","departamentos")); 
+        if($request){
+            $departamentos = Departamento::all();
+            $departamento = trim($request->get('departamento_id'));
+
+            if($departamento){
+                $ordenes = Orden::where('departamento_id', '=', $departamento)
+                        ->orderBy('id','asc')
+                        ->paginate(8);
+            
+                return view("admin.preventivo.orden",compact("ordenes","departamentos"));
+
+            }else if(!$departamento or $departamento==0){
+                $ordenes = Orden::paginate(8);
+                $departamentos = Departamento::all();
+              
+                return view("admin.preventivo.orden",compact("ordenes","departamentos")); 
+            }
+            
+        }
     }
 
     /**

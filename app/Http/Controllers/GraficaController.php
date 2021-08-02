@@ -14,13 +14,76 @@ class GraficaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        /*
         $departamentos = Departamento::all();
         $sql = "SELECT COUNT(o.tipo_mantenimiento) AS 'valor' FROM orden_correctivos o INNER JOIN correctivos c ON o.correctivo_id = c.id GROUP BY (c.departamento_id)";
-        $valores = DB::select($sql);
-       // print_r($valores);
-        return view("admin.correctivo.graficas",compact("departamentos","valores")); 
+        $valores = DB::select($sql); 
+        */
+        
+        /*Consulta por mes*/ 
+        //SELECT DATE(DATE_FORMAT(fecha, '%Y-%m-01')) AS month_beginning, SUM(tipo_mantenimiento) AS total, COUNT(*) AS transactions FROM orden_correctivos GROUP BY DATE(DATE_FORMAT(fecha, '%Y-%m-01')) ORDER BY DATE(DATE_FORMAT(fecha, '%Y-%m-01'))
+       
+        /*Consulta por semana */
+        //SELECT FROM_DAYS(TO_DAYS(fecha) -MOD(TO_DAYS(fecha) -1, 7)) AS week_beginning, SUM(tipo_mantenimiento) AS total, COUNT(*) AS transactions FROM orden_correctivos GROUP BY FROM_DAYS(TO_DAYS(fecha) -MOD(TO_DAYS(fecha) -1, 7)) ORDER BY FROM_DAYS(TO_DAYS(fecha) -MOD(TO_DAYS(fecha) -1, 7))
+        
+        /*Consulta semestral*/
+        //SELECT DATE(CONCAT(YEAR(fecha),'-', 1 + 3*(QUARTER(fecha)-1),'-01')) AS quarter_beginning, SUM(tipo_mantenimiento) AS total, COUNT(*) AS transactions FROM orden_correctivos GROUP BY DATE(CONCAT(YEAR(fecha),'-', 1 + 3*(QUARTER(fecha)-1),'-01')) ORDER BY DATE(CONCAT(YEAR(fecha),'-', 1 + 3*(QUARTER(fecha)-1),'-01'))
+
+        if($request){
+            $departamentos = Departamento::all();
+            $buscar = trim($request->get('buscar'));
+            $departamento = trim($request->get('departamento_id'));
+             
+            if($buscar and $departamento==0){
+
+                if($buscar == "semanal"){
+                    $sql = "SELECT FROM_DAYS(TO_DAYS(fecha) -MOD(TO_DAYS(fecha) -1, 7)) AS tiempo, SUM(tipo_mantenimiento) AS total, COUNT(*) AS valor FROM orden_correctivos GROUP BY FROM_DAYS(TO_DAYS(fecha) -MOD(TO_DAYS(fecha) -1, 7)) ORDER BY FROM_DAYS(TO_DAYS(fecha) -MOD(TO_DAYS(fecha) -1, 7))";
+                    $valores = DB::select($sql); 
+
+                }else if($buscar = "mensual"){
+                    $sql = "SELECT DATE(DATE_FORMAT(fecha, '%Y-%m-01')) AS tiempo, SUM(tipo_mantenimiento) AS total, COUNT(*) AS valor FROM orden_correctivos GROUP BY DATE(DATE_FORMAT(fecha, '%Y-%m-01')) ORDER BY DATE(DATE_FORMAT(fecha, '%Y-%m-01'))";
+                    $valores = DB::select($sql); 
+
+                }else if($buscar = "semestral"){
+                    $sql = "SELECT DATE(CONCAT(YEAR(fecha),'-', 1 + 6*(QUARTER(fecha)-1),'-01')) AS tiempo, SUM(tipo_mantenimiento) AS total, COUNT(*) AS valor FROM orden_correctivos GROUP BY DATE(CONCAT(YEAR(fecha),'-', 1 + 3*(QUARTER(fecha)-1),'-01')) ORDER BY DATE(CONCAT(YEAR(fecha),'-', 1 + 3*(QUARTER(fecha)-1),'-01'))";
+                    $valores = DB::select($sql);
+                }
+                            
+                return view("admin.correctivo.graficas",compact("departamentos","valores","buscar")); 
+
+            }else if($buscar and $departamento){
+                if($buscar == "semanal"){
+                    $sql = "SELECT FROM_DAYS(TO_DAYS(o.fecha) -MOD(TO_DAYS(o.fecha) -1, 7)) AS tiempo, SUM(o.tipo_mantenimiento) AS total, COUNT(*) AS valor FROM orden_correctivos o INNER JOIN correctivos c ON o.correctivo_id = c.id WHERE c.departamento_id = ".$departamento." GROUP BY FROM_DAYS(TO_DAYS(o.fecha) -MOD(TO_DAYS(o.fecha) -1, 7)) ORDER BY FROM_DAYS(TO_DAYS(o.fecha) -MOD(TO_DAYS(o.fecha) -1, 7))";
+                    $valores = DB::select($sql); 
+
+                }else if($buscar = "mensual"){
+                    $sql = "SELECT DATE(DATE_FORMAT(o.fecha, '%Y-%m-01')) AS tiempo, SUM(o.tipo_mantenimiento) AS total, COUNT(*) AS valor FROM orden_correctivos o INNER JOIN correctivos c ON o.correctivo_id = c.id WHERE c.departamento_id = ".$departamento." GROUP BY DATE(DATE_FORMAT(o.fecha, '%Y-%m-01')) ORDER BY DATE(DATE_FORMAT(o.fecha, '%Y-%m-01'))";
+                    $valores = DB::select($sql); 
+
+                }else if($buscar = "semestral"){
+                    $sql = "SELECT DATE(CONCAT(YEAR(o.fecha),'-', 1 + 6*(QUARTER(o.fecha)-1),'-01')) AS tiempo, SUM(o.tipo_mantenimiento) AS total, COUNT(*) AS valor FROM orden_correctivos o INNER JOIN correctivos c ON o.correctivo_id = c.id WHERE c.departamento_id = ".$departamento." GROUP BY DATE(CONCAT(YEAR(o.fecha),'-', 1 + 3*(QUARTER(o.fecha)-1),'-01')) ORDER BY DATE(CONCAT(YEAR(o.fecha),'-', 1 + 3*(QUARTER(o.fecha)-1),'-01'))";
+                    $valores = DB::select($sql);
+                }
+
+                return view("admin.correctivo.graficas",compact("departamentos","valores","buscar")); 
+ 
+            }else if(!$buscar and $departamento){
+                $sql = "SELECT COUNT(o.tipo_mantenimiento) AS 'valor', d.nombre as 'tiempo' FROM orden_correctivos o INNER JOIN correctivos c ON o.correctivo_id = c.id INNER JOIN departamentos d ON c.departamento_id = d.id WHERE c.departamento_id = ".$departamento." GROUP BY (c.departamento_id)";
+                $valores = DB::select($sql); 
+
+                return view("admin.correctivo.graficas",compact("departamentos","valores","buscar")); 
+
+            }else if(!$buscar and !$departamento){
+                $sql = "SELECT COUNT(o.tipo_mantenimiento) AS 'valor', d.nombre as 'tiempo' FROM orden_correctivos o INNER JOIN correctivos c ON o.correctivo_id = c.id INNER JOIN departamentos d ON c.departamento_id = d.id GROUP BY (c.departamento_id)";
+                $valores = DB::select($sql); 
+                        
+                return view("admin.correctivo.graficas",compact("departamentos","valores","buscar")); 
+            }          
+        }
+
+        
     }
 
     /**

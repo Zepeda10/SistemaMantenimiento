@@ -71,17 +71,19 @@
 		</a>
     </button>
 
-	<form id="form" action="#" method="POST" class="mt-2 mb-5">
-        <div class="row mb-4">   
+	<form id="form" action="{{route('correctivo.listacorrectivo',$buscar,$departamentos)}}" method="get" class="mt-2 mb-5">
+        <div class="row mb-4">
+            <div class="col">
+                <input type="date" id="fecha" name="fecha" class="form-control border border-secondary">
+				<input type="hidden" id="buscar" name="buscar" class="form-control border border-secondary" value="">
+            </div>
             <div class="col">
 				<select class="form-control" name="departamento_id">
+					<option value="0">Seleccionar departamento</option>
 					@foreach($departamentos as $departamento)
 						<option value="{{ $departamento->id }}">{{ $departamento->nombre }}</option>
 					@endforeach
 				</select>
-            </div>
-            <div class="col">
-                <input type="date" name="fecha" class="form-control border border-secondary">
             </div>
 			<div class="col">
 				<button type="submit" class="btn btn-secondary d-inline">Buscar</button>
@@ -122,6 +124,14 @@
 		{{ $datos->appends(request()->input())->links() }} 
 	</div>	
 </div>
+
+<script>
+		$(document).ready(function(){
+			$('#fecha').change(function () {
+                        $('#buscar').val($(this).val());
+                    });
+		});
+	</script>
 @endsection
 		
 		

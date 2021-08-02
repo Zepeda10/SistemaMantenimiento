@@ -15,11 +15,28 @@ class VerificacionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $verificaciones = Verificacion::paginate(8);
-        $departamentos = Departamento::all();
-        return view("admin.preventivo.verificaciones",compact("verificaciones","departamentos")); 
+        if($request){
+            $departamentos = Departamento::all();
+            $departamento = trim($request->get('departamento_id'));
+
+            if($departamento){
+                $verificaciones = Verificacion::where('departamento_id', '=', $departamento)
+                        ->orderBy('id','asc')
+                        ->paginate(8);
+
+                
+                return view("admin.preventivo.verificaciones",compact("verificaciones","departamentos"));
+
+            }else if(!$departamento or $departamento==0){
+                $verificaciones = Verificacion::paginate(8);
+                $departamentos = Departamento::all();
+              
+               return view("admin.preventivo.verificaciones",compact("verificaciones","departamentos")); 
+            }
+            
+        }
     }
 
     /**

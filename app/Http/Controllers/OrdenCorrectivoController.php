@@ -15,11 +15,45 @@ class OrdenCorrectivoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $ordenes = OrdenCorrectivo::paginate(8);
-        $departamentos = Departamento::all();
-        return view("admin.correctivo.ordenes",compact("ordenes","departamentos")); 
+        if($request){
+            $departamentos = Departamento::all();
+            $buscar = trim($request->get('buscar'));
+            $departamento = trim($request->get('departamento_id'));
+
+            if($buscar and $departamento==0){
+                $ordenes = OrdenCorrectivo::where('fecha','=', $buscar)
+                        ->orderBy('id','asc')
+                        ->paginate(8);
+                        
+                return view("admin.correctivo.ordenes",compact("ordenes","departamentos","buscar")); 
+
+            }else if($buscar and $departamento){
+                $ordenes = OrdenCorrectivo::join('correctivos', 'correctivos.id', '=', 'orden_correctivos.correctivo_id')
+                    ->select('correctivos.*','orden_correctivos.*')
+                    ->where("correctivos.departamento_id",$departamento)
+                    ->where("orden_correctivos.fecha",$buscar)           
+                    ->paginate(10);
+                return view("admin.correctivo.ordenes",compact("ordenes","departamentos","buscar")); 
+ 
+            }else if(!$buscar and $departamento){
+                $ordenes = OrdenCorrectivo::join('correctivos', 'correctivos.id', '=', 'orden_correctivos.correctivo_id')
+                    ->select('correctivos.*','orden_correctivos.*')
+                    ->where("correctivos.departamento_id",$departamento)           
+                    ->paginate(10);
+                return view("admin.correctivo.ordenes",compact("ordenes","departamentos","buscar")); 
+
+            }else if(!$buscar and !$departamento){ 
+                $departamentos = Departamento::all();
+                $ordenes = OrdenCorrectivo::paginate(8);
+                        
+                return view("admin.correctivo.ordenes",compact("ordenes","departamentos","buscar")); 
+            } 
+            
+             
+        }
+        
     }
 
     /**

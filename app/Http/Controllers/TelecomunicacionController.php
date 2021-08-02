@@ -98,23 +98,73 @@ class TelecomunicacionController extends Controller
         //
     }
 
-    public function internet(){
-        $departamentos = Departamento::all();
-        $datos = Telecomunicacion::where('tipo', 'internet')->paginate(8);
-        return view("admin.telecomunicaciones.internet",compact("datos","departamentos")); 
+    public function internet(Request $request){
+
+        if($request){
+            $departamentos = Departamento::all();
+            $departamento = trim($request->get('departamento_id'));
+
+            if($departamento){
+                $datos = Telecomunicacion::where('departamento_id', '=', $departamento)
+                        ->where('tipo', 'internet')
+                        ->orderBy('id','asc')
+                        ->paginate(8);
+    
+                return view("admin.telecomunicaciones.internet",compact("datos","departamentos")); 
+
+            }else if(!$departamento or $departamento==0){
+                $datos = Telecomunicacion::where('tipo', 'internet')->paginate(8);
+                $departamentos = Departamento::all();
+               // return "dos";
+               return view("admin.telecomunicaciones.internet",compact("datos","departamentos")); 
+            }
+            
+        }
     }
 
-    public function correo(){
-        $departamentos = Departamento::all();
-        $usuarios = User::all();
-        $datos = Telecomunicacion::where('tipo', 'correo')->paginate(8);
-        return view("admin.telecomunicaciones.correo",compact("datos","departamentos","usuarios")); 
+    public function correo(Request $request){
+        if($request){
+            $departamentos = Departamento::all();
+            $departamento = trim($request->get('departamento_id'));
+
+            if($departamento){
+                $datos = Telecomunicacion::where('departamento_id', '=', $departamento)
+                        ->where('tipo', 'internet')
+                        ->orderBy('id','asc')
+                        ->paginate(8);
+    
+                return view("admin.telecomunicaciones.correo",compact("datos","departamentos")); 
+
+            }else if(!$departamento or $departamento==0){
+                $datos = Telecomunicacion::where('tipo', 'internet')->paginate(8);
+                $departamentos = Departamento::all();
+               // return "dos";
+               return view("admin.telecomunicaciones.correo",compact("datos","departamentos")); 
+            }
+        }
     }
 
-    public function telefono(){
-        $departamentos = Departamento::all();
-        $datos = Telecomunicacion::where('tipo', 'telefono')->paginate(8);
-        return view("admin.telecomunicaciones.telefono",compact("datos","departamentos")); 
+    public function telefono(Request $request){
+        if($request){
+            $departamentos = Departamento::all();
+            $departamento = trim($request->get('departamento_id'));
+
+            if($departamento){
+                $datos = Telecomunicacion::where('departamento_id', '=', $departamento)
+                        ->where('tipo', 'internet')
+                        ->orderBy('id','asc')
+                        ->paginate(8);
+    
+                return view("admin.telecomunicaciones.telefono",compact("datos","departamentos")); 
+
+            }else if(!$departamento or $departamento==0){
+                $datos = Telecomunicacion::where('tipo', 'internet')->paginate(8);
+                $departamentos = Departamento::all();
+               // return "dos";
+               return view("admin.telecomunicaciones.telefono",compact("datos","departamentos")); 
+            }
+            
+        }
     }
 
     public function formInternet(){

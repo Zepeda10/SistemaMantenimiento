@@ -70,13 +70,15 @@
 		</a>
     </button>
 
-	<form id="form" action="#" method="POST" class="mt-2 mb-5">
+	<form id="form" action="{{route('solicitudes.index',$buscar,$departamentos)}}" method="get" class="mt-2 mb-5">
         <div class="row mb-4">
             <div class="col">
-                <input type="date" name="fecha" class="form-control border border-secondary">
+                <input type="date" id="fecha" name="fecha" class="form-control border border-secondary">
+				<input type="hidden" id="buscar" name="buscar" class="form-control border border-secondary" value="">
             </div>
             <div class="col">
 				<select class="form-control" name="departamento_id">
+					<option value="0">Seleccionar departamento</option>
 					@foreach($departamentos as $departamento)
 						<option value="{{ $departamento->id }}">{{ $departamento->nombre }}</option>
 					@endforeach
@@ -150,6 +152,15 @@
 	<div class="mt-3">
 		{{ $registros->appends(request()->input())->links() }} 
 	</div>	
+
+
+	<script>
+		$(document).ready(function(){
+			$('#fecha').change(function () {
+                        $('#buscar').val($(this).val());
+                    });
+		});
+	</script>
 </div>
 
 @endsection

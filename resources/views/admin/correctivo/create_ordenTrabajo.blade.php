@@ -63,7 +63,7 @@
                         </div>
                         <div class="row my-2">
                             <div class="col">
-                                <label for="name">Nombre(s)</label>
+                                <label for="nombre">Nombre(s)</label>
                                 <input type="text" class="form-control border border-secondary" id="name" name="nombre" placeholder="Nombre" readonly>
                             </div>           
                         </div>

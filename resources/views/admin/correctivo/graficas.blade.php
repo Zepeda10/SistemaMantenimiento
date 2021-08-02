@@ -76,26 +76,26 @@
 		</a>
     </button>
 
-    <form id="form" action="#" method="POST" class="mt-2 mb-5">
+    <form id="form" action="{{route('graficos.index',$buscar,$departamentos)}}" method="get" class="mt-2 mb-5">
         <div class="row mb-4">
             <div class="col">
-                <label for="">Departamento</label>
 				<select class="form-control" name="departamento_id">
+                    <option value="0">Seleccionar departamento</option>
 					@foreach($departamentos as $departamento)
 						<option value="{{ $departamento->id }}">{{ $departamento->nombre }}</option>
 					@endforeach
 				</select>
             </div>
             <div class="col">
-                <label for="">Periodo</label>
-                <select class="form-control" name="departamento_id">
+                <select class="form-control" name="buscar">
+                <option value="0">Seleccionar periodo</option>
 					<option value="semanal">Semanal</option>
                     <option value="mensual">Mensual</option>
                     <option value="semestral">Semestral</option>
 				</select>
             </div>
 			<div class="col">
-				<button type="submit" class="btn btn-secondary d-inline" style="margin-top:24px;">Buscar</button>
+				<button type="submit" class="btn btn-secondary d-inline">Buscar</button>
 			</div>
         </div>
 	</form>
@@ -126,8 +126,8 @@
 
 <script>
     var departamentos = new Array();
-    <?php foreach($departamentos as $departamento){ ?>
-        departamentos.push('<?php echo $departamento->nombre; ?>');
+    <?php foreach($valores as $valor){ ?>
+        departamentos.push('<?php echo $valor->tiempo; ?>');
     <?php } ?>
 
     var valores = new Array();
@@ -142,10 +142,10 @@
         data: {
             labels: departamentos, //Departamentos
             datasets: [{
-                label: 'Cantidad de mantenimientos',
+                label: 'Cantidad de mantenimientos',   
                 data: valores, //Cantidad de mantenimientos
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.5)',
+                    'rgba(255, 99, 132, 0.5)', 
                     'rgba(54, 162, 235, 0.5)',
                     'rgba(255, 206, 86, 0.5)',
                     'rgba(75, 192, 192, 0.5)',
