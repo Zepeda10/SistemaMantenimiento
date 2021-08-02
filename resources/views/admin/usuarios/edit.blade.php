@@ -19,16 +19,25 @@
                             <div class="col">
                                 <label for="name">Nombre</label>
                                 <input type="text" class="form-control border border-secondary" name="name" value="{{ old('name', $usuario->name) }}" placeholder="Nombre">
+                                @error('name')
+                                    <small class="text-danger">*{{ $message }}</small>
+                                @enderror
                             </div>
 
                             <div class="col">
                                 <label for="ap_paterno">Apellido Paterno</label>
                                 <input type="text" class="form-control border border-secondary" name="ap_paterno" value="{{ old('ap_paterno', $usuario->ap_paterno) }}" placeholder="Apellido Paterno">
+                                @error('ap_paterno')
+                                    <small class="text-danger">*{{ $message }}</small>
+                                @enderror
                             </div>
 
                             <div class="col">
                                 <label for="ap_materno">Apellido Materno</label>
                                 <input type="text" class="form-control border border-secondary" name="ap_materno" value="{{ old('ap_materno', $usuario->ap_materno) }}" placeholder="Apellido Materno">
+                                @error('ap_materno')
+                                    <small class="text-danger">*{{ $message }}</small>
+                                @enderror
                             </div>
                         </div>
 
@@ -36,14 +45,23 @@
                             <div class="col">
                                 <label for="telefono">Teléfono</label>
                                 <input type="text" class="form-control border border-secondary" value="{{ old('telefono', $usuario->telefono) }}" name="telefono" placeholder="Teléfono">
+                                @error('telefono')
+                                    <small class="text-danger">*{{ $message }}</small>
+                                @enderror
                             </div>
                             <div class="col">
                                 <label for="email">Email</label>
                                 <input type="email" class="form-control border border-secondary" name="email" value="{{ old('email', $usuario->email) }}" placeholder="Email">
+                                @error('email')
+                                    <small class="text-danger">*{{ $message }}</small>
+                                @enderror
                             </div>
                             <div class="col">
                                 <label for="usuario">Usuario</label>
                                 <input type="text" class="form-control border border-secondary" value="{{ old('usuario', $usuario->usuario) }}" name="usuario" placeholder="Usuario">
+                                @error('usuario')
+                                    <small class="text-danger">*{{ $message }}</small>
+                                @enderror
                             </div>
                         </div>
 

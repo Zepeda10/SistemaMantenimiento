@@ -65,6 +65,7 @@ class UserController extends Controller
             'ap_materno' => 'required|max:80',
             'cargo' => 'required',
             'telefono' => 'required|max:10|digits:10',
+            'password' => 'required|min:6',
         ]);
 
         $entrada = $request->all();

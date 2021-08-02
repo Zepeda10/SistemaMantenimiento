@@ -22,6 +22,9 @@
                             <div class="col">
                                 <label for="noInventario">No. Inventario</label>
                                 <input type="text" class="form-control border border-secondary" name="noInventario" value="{{ old('noInventario', $equipo->noInventario) }}" placeholder="No. Inventario">
+                                @error('noInventario')
+                                    <small class="text-danger">*{{ $message }}</small>
+                                @enderror
                             </div>     
                         </div>
         
@@ -62,6 +65,9 @@
                             <div class="col">
                                 <label for="modelo">Modelo</label>
                                 <input type="text" class="form-control border border-secondary" name="modelo" value="{{ old('modelo', $equipo->modelo) }}" placeholder="Modelo">
+                                @error('modelo')
+                                    <small class="text-danger">*{{ $message }}</small>
+                                @enderror
                             </div>
                         </div>
                         

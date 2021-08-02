@@ -47,6 +47,9 @@
                             <div class="col">
                                 <label for="problema">Problema</label>
                                 <textarea class="form-control" name="problema" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                @error('problema')
+                                    <small class="text-danger">*{{ $message }}</small>
+                                @enderror
                             </div> 
                         </div>
 

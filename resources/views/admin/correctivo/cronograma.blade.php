@@ -100,6 +100,28 @@
       </button>
     @endif
 
+    <div class="col-md-1 d-inline-block" style="margin-left:25px;">
+      <select name="mes" id="mes" class="dropdown_dw_c w-dropdown form-control">
+      <option value="{{route('correctivo.cronograma')}}">Elegir mes</option>
+        <option value="{{route('correctivo.cronogramames','january')}}">Enero</option>
+        <option value="{{route('correctivo.cronogramames','february')}}">Febrero</option>
+        <option value="{{route('correctivo.cronogramames','march')}}">Marzo</option>
+        <option value="{{route('correctivo.cronogramames','april')}}">Abril</option>
+        <option value="{{route('correctivo.cronogramames','may')}}">Mayo</option>
+        <option value="{{route('correctivo.cronogramames','june')}}">Junio</option>
+        <option value="{{route('correctivo.cronogramames','july')}}">Julio</option>
+        <option value="{{route('correctivo.cronogramames','august')}}">Agosto</option>
+        <option value="{{route('correctivo.cronogramames','september')}}">Septiembre</option>
+        <option value="{{route('correctivo.cronogramames','october')}}">Octubre</option>
+        <option value="{{route('correctivo.cronogramames','november')}}">Noviembre</option>
+        <option value="{{route('correctivo.cronogramames','december')}}">Diciembre</option>
+      </select>
+    </div>
+
+    <button class="boton-regresar">
+      <a class="button_dw_c w-button text-white text-decoration-none" onclick="enlace()">Ir a mes</a>
+    </button>
+
 
     <div class="container">
       <div style="height:50px"></div>
@@ -175,6 +197,14 @@
 
 	
 </div>
+
+<script>
+  function enlace() {
+  // Buscamos el select y el valor del mismo
+  var value = document.getElementsByClassName('w-dropdown')[0].value;
+  if (value != "") { location.href = value; }
+}
+</script>
 @endsection
 		
 		

@@ -35,7 +35,7 @@
                         <div class="row my-2">
                             <div class="col">
                                 <label for="tipo_mantenimiento">Tipo de Mantenimiento</label>
-                                <input class="form-check-input" type="radio" name="tipo_mantenimiento" id="flexRadioDefault1" value="Interno">
+                                <input class="form-check-input" type="radio" name="tipo_mantenimiento" id="flexRadioDefault1" value="Interno" checked>
                                 <label class="form-check-label" for="flexRadioDefault1">
                                     Interno
                                 </label>
@@ -140,12 +140,18 @@
                             <div class="col">
                                 <label for="resumen">Resumen</label>
                                 <textarea class="form-control" name="resumen" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                @error('resumen')
+                                    <small class="text-danger">*{{ $message }}</small>
+                                @enderror
                             </div> 
                         </div>
                         <div class="row my-2">
                             <div class="col">
                                 <label for="conclusion">Conclusión</label>
                                 <textarea class="form-control" name="conclusion" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                @error('conclusion')
+                                    <small class="text-danger">*{{ $message }}</small>
+                                @enderror
                             </div> 
                         </div>
                         <div class="row my-2">

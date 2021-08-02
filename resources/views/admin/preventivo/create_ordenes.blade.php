@@ -87,12 +87,18 @@
                             <div class="col">
                                 <label for="resumen">Resumen</label>
                                 <textarea class="form-control" name="resumen" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                @error('resumen')
+                                    <small class="text-danger">*{{ $message }}</small>
+                                @enderror
                             </div> 
                         </div>
                         <div class="row my-2">
                             <div class="col">
                                 <label for="conclusion">Conclusión</label>
                                 <textarea class="form-control" name="conclusion" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                @error('resumen')
+                                    <small class="text-danger">*{{ $message }}</small>
+                                @enderror
                             </div> 
                         </div>
                         <div class="row my-2">

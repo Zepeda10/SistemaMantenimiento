@@ -66,6 +66,9 @@
                             <div class="col">
                                 <label for="observaciones">Observación del problema</label>
                                 <textarea class="form-control" name="observaciones" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                @error('observaciones')
+                                    <small class="text-danger">*{{ $message }}</small>
+                                @enderror
                             </div> 
                         </div>
 

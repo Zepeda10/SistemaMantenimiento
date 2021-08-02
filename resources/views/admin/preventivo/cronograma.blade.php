@@ -95,7 +95,7 @@
 	    <div class="d-block"></div>
 
     @endif
-
+    
     <button class="boton-regresar">
         <a class="text-decoration-none text-white" href="{{route('dashboard')}}">
 			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-square" viewBox="0 0 16 16">
@@ -107,6 +107,28 @@
 
     <button class="boton-verde" style="margin-left:15px;">
         <a class="text-decoration-none text-white" href="{{route('oficios.create')}}">Agregar</a>
+    </button>
+
+    <div class="col-md-1 d-inline-block" style="margin-left:25px;">
+      <select name="mes" id="mes" class="dropdown_dw_c w-dropdown form-control">
+      <option value="{{route('admin.cronograma')}}">Elegir mes</option>
+        <option value="{{route('admin.mes','january')}}">Enero</option>
+        <option value="{{route('admin.mes','february')}}">Febrero</option>
+        <option value="{{route('admin.mes','march')}}">Marzo</option>
+        <option value="{{route('admin.mes','april')}}">Abril</option>
+        <option value="{{route('admin.mes','may')}}">Mayo</option>
+        <option value="{{route('admin.mes','june')}}">Junio</option>
+        <option value="{{route('admin.mes','july')}}">Julio</option>
+        <option value="{{route('admin.mes','august')}}">Agosto</option>
+        <option value="{{route('admin.mes','september')}}">Septiembre</option>
+        <option value="{{route('admin.mes','october')}}">Octubre</option>
+        <option value="{{route('admin.mes','november')}}">Noviembre</option>
+        <option value="{{route('admin.mes','december')}}">Diciembre</option>
+      </select>
+    </div>
+
+    <button class="boton-regresar">
+      <a class="button_dw_c w-button text-white text-decoration-none" onclick="enlace()">Ir a mes</a>
     </button>
 
     <div class="container">
@@ -177,6 +199,14 @@
 
 	
 </div>
+
+<script>
+  function enlace() {
+  // Buscamos el select y el valor del mismo
+  var value = document.getElementsByClassName('w-dropdown')[0].value;
+  if (value != "") { location.href = value; }
+}
+</script>
 @endsection
 		
 		

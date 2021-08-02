@@ -62,7 +62,7 @@ Route::get('admin/agregar-correo', [TelecomunicacionController::class, 'formCorr
 Route::get('admin/agregar-telefono', [TelecomunicacionController::class, 'formTelefono'])->name('jefe.telefono'); 
 
 Route::get('admin/cronograma', [CalendarioPreventivoController::class, 'index'])->name('admin.cronograma'); 
-Route::get('admin/cronograma/{month}', [CalendarioPreventivoController::class, 'index_month']);
+Route::get('admin/cronograma/{month}', [CalendarioPreventivoController::class, 'index_month'])->name('admin.mes');
 
 Route::get('admin/lista-correctivos', [CorrectivoController::class, 'correctivos'])->name('correctivo.listacorrectivo'); 
 
