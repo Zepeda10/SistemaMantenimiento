@@ -54,20 +54,10 @@
             </div>
             <!-- main area -->
             <div class="col-xs-12 col-sm-9">
-            @if($detalle != 0)  
+            @if($detalle != "" )  
                 <h3 class="text-center">Nueva Fecha</h3>
 					    
-                @foreach($todos as $todo)
-                    <li class="mb-3 p-3" style="border-width: 1px; border-style: solid;border-color:#1b396a; background-color: #F3F7FA;">
-                        <a class="text-decoration-none text-dark" href="{{route('cronograma.addfecha',$todo)}}">
-                            <p style="margin: 3px 0;"><span class="fw-bold">ID Solicitud:</span> {{ $todo->id }}</p>
-                            <p style="margin: 3px 0;"><span class="fw-bold">Departamento:</span> {{ $todo->departamento->nombre }}</p>
-                            <p style="margin: 3px 0;"><span class="fw-bold">Tipo de equipo:</span> {{ $todo->equipo->nombre }}</p>
-                            <p style="margin: 3px 0;"><span class="fw-bold">Prioridad:</span> {{ $todo->prioridad }}</p>    
-                        </a>
-                    </li>
-                @endforeach
-
+               
                       
                 <div class="row justify-content-center">
                     <div class="col-md-5">

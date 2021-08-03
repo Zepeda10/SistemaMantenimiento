@@ -182,8 +182,8 @@ class CalendarioCorrectivoController extends Controller
             $detalle = Correctivo::first();
 
             if(!$detalle){
-              $detalle = 0;
-            }
+              $detalle = "";
+          }
         }
         
         return view("admin.correctivo.update_cronograma", compact("departamentos","equipos","detalle","todos"));

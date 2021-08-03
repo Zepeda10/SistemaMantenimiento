@@ -25,7 +25,7 @@
             </div>
             <!-- main area -->
             <div class="col-xs-12 col-sm-9">
-            @if($detalle != 0)  
+            @if($detalle != "" )  
                 <h3 class="text-center">Orden de Trabajo</h3>
                 <div class="row justify-content-center">
                     <div class="col-md-5">
