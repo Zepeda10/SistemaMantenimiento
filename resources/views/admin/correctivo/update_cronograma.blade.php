@@ -54,9 +54,21 @@
             </div>
             <!-- main area -->
             <div class="col-xs-12 col-sm-9">
+            @if($detalle != 0)  
                 <h3 class="text-center">Nueva Fecha</h3>
+					    
+                @foreach($todos as $todo)
+                    <li class="mb-3 p-3" style="border-width: 1px; border-style: solid;border-color:#1b396a; background-color: #F3F7FA;">
+                        <a class="text-decoration-none text-dark" href="{{route('cronograma.addfecha',$todo)}}">
+                            <p style="margin: 3px 0;"><span class="fw-bold">ID Solicitud:</span> {{ $todo->id }}</p>
+                            <p style="margin: 3px 0;"><span class="fw-bold">Departamento:</span> {{ $todo->departamento->nombre }}</p>
+                            <p style="margin: 3px 0;"><span class="fw-bold">Tipo de equipo:</span> {{ $todo->equipo->nombre }}</p>
+                            <p style="margin: 3px 0;"><span class="fw-bold">Prioridad:</span> {{ $todo->prioridad }}</p>    
+                        </a>
+                    </li>
+                @endforeach
 
-                
+                      
                 <div class="row justify-content-center">
                     <div class="col-md-5">
                         <form action="{{route('correctivo.update',$detalle)}}" method="post" accept-charset="utf-8">
@@ -104,14 +116,16 @@
                                     <input type="date" class="form-control border border-secondary" name="fecha" value="">
                                 </div> 
                             </div>
-                            
-
                             <div class="d-grid mx-auto">
                                 <button class="btn btn-success btn-block" type="submit" class="btn-enviar" name="enviar">Actualizar</button>
                             </div>
                         </form>
                     </div>
                 </div>
+
+                @else
+                    <h3>Sin información para actualizar</h3>
+                @endif
             </div><!-- /.col-xs-12 main -->
         </div>
         <!--/.row-->

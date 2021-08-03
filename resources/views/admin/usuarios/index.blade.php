@@ -151,7 +151,11 @@
     			    </td>
 
                     <td>
+					@if($user->departamento != null)
 					    <p>{{$user->departamento->nombre}}</p>
+					@else
+						<p>Sin departamento</p>
+					@endif
     			    </td>
 
                     <td>

@@ -25,9 +25,8 @@
             </div>
             <!-- main area -->
             <div class="col-xs-12 col-sm-9">
+            @if($detalle != 0)  
                 <h3 class="text-center">Orden de Trabajo</h3>
-
-                
                 <div class="row justify-content-center">
                     <div class="col-md-5">
                     <form action="{{route('orden-correctivo.store')}}" method="post" enctype="multipart/form-data" accept-charset="utf-8">
@@ -50,7 +49,7 @@
                                 <label for="tipo_servicio">Tipo de Servicio</label>
                                 <select name="tipo_servicio" class="form-control border border-secondary" id="tipo">
                                     <option value="correctivo">Correctivo</option> 
-                                    <option value="preventivo">Preventivo</option> 
+                                    <option value="preventivo">Preventivo</option>  
                                 </select>
                             </div>           
                         </div>
@@ -173,6 +172,9 @@
                     </form>
                     </div>
                 </div>
+                @else
+                    <h3>Sin información para crear una orden de trabajo</h3>
+                @endif
             </div><!-- /.col-xs-12 main -->
         </div>
         <!--/.row-->

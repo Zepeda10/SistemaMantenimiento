@@ -104,10 +104,11 @@
 			<p class="d-inline" style="margin-left:5px;">Regresar</p>
 		</a>
     </button>
-
+    @if (Auth::user()->cargo=="Administrador")
     <button class="boton-verde" style="margin-left:15px;">
         <a class="text-decoration-none text-white" href="{{route('oficios.create')}}">Agregar</a>
     </button>
+    @endif
 
     <div class="col-md-1 d-inline-block" style="margin-left:25px;">
       <select name="mes" id="mes" class="dropdown_dw_c w-dropdown form-control">

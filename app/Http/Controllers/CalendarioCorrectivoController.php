@@ -180,7 +180,12 @@ class CalendarioCorrectivoController extends Controller
         $todos = Correctivo::all();
         if(!isset($detalle)){
             $detalle = Correctivo::first();
+
+            if(!$detalle){
+              $detalle = 0;
+            }
         }
+        
         return view("admin.correctivo.update_cronograma", compact("departamentos","equipos","detalle","todos"));
     }
     

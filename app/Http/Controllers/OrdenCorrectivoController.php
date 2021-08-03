@@ -132,6 +132,10 @@ class OrdenCorrectivoController extends Controller
         $usuarios = User::all();
         if(!isset($detalle)){
             $detalle = Correctivo::first();
+
+            if(!$detalle){
+                $detalle = 0;
+            }
         }
         return view("admin.correctivo.create_ordenTrabajo", compact("solicitudes","usuarios","detalle"));   
     }
