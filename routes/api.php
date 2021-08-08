@@ -26,3 +26,5 @@ Route::get('/verificacion/{id}/departamento', [VerificacionController::class, 'b
 Route::get('/orden/{id}/departamento', [OrdenController::class, 'byDepartament']); 
 Route::get('/orden/{id}/usuario', [OrdenController::class, 'byUser']); 
 Route::get('/equipo/{id}/inventario', [CorrectivoController::class, 'byEquipo']); 
+Route::get('/orden/{id}/refacion', [OrdenController::class, 'byRefaccion']); 
+Route::get('/orden/{id}/material', [OrdenController::class, 'byMaterial']); 

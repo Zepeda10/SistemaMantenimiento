@@ -6,7 +6,11 @@ use App\Models\OrdenCorrectivo;
 use App\Models\Correctivo;
 use App\Models\User;
 use App\Models\Departamento;
+use App\Models\OrdenRefaccion;
+use App\Models\OrdenMaterial;
 use Illuminate\Http\Request;
+use App\Models\Material;
+use App\Models\Refaccion;
 use Barryvdh\DomPDF\Facade as PDF;
 
 class OrdenCorrectivoController extends Controller
@@ -75,20 +79,7 @@ class OrdenCorrectivoController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'tipo_mantenimiento' => 'required',
-            'tipo_servicio' => 'required',
-            'user_id' => 'required',
-            'fecha' => 'required',
-            'correctivo_id' => 'required',
-            'refacciones' => 'required',
-            'materiales' => 'required',
-            'resumen' => 'required',
-            'conclusion' => 'required',
-            'img_antes' => 'required',
-            'img_despues' => 'required',
-        ]);
-        
+         
         $entrada = new OrdenCorrectivo();
         $entrada->tipo_mantenimiento = $request->tipo_mantenimiento;
         $entrada->tipo_servicio = $request->tipo_servicio;
@@ -96,8 +87,6 @@ class OrdenCorrectivoController extends Controller
         $entrada->nombre = $request->nombre;
         $entrada->fecha = $request->fecha;
         $entrada->correctivo_id = $request->correctivo_id;
-        $entrada->refacciones = $request->refacciones;
-        $entrada->materiales = $request->materiales;
         $entrada->resumen = $request->resumen;
         $entrada->conclusion = $request->conclusion;
 
@@ -115,6 +104,28 @@ class OrdenCorrectivoController extends Controller
 
         $entrada->save();
 
+        $ide = OrdenCorrectivo::latest('id')->first();      
+        
+        $tags = $request->input('material_id');
+        foreach($tags as $tag){
+          $material = new OrdenMaterial();
+          $material->material_id = $tag;
+          $material->orden_correctivo_id = $ide->id;
+          $material->save();
+       }
+
+       $tags2 = $request->input('refaccion_id');
+        foreach($tags2 as $tag){
+          $refaccion = new OrdenRefaccion();
+          $refaccion->refaccion_id = $tag;
+          $refaccion->orden_correctivo_id = $ide->id;
+          $refaccion->save();
+       }
+
+       // $ide = OrdenCorrectivo::latest('id')->first();  
+         
+        //$co = Correctivo::findOrFail($ide->correctivo_id);
+        //$co->delete();
 
        return redirect()->route('correctivo.index');
     }
@@ -130,6 +141,8 @@ class OrdenCorrectivoController extends Controller
         $solicitudes = Correctivo::all();
         $detalle = Correctivo::find($id);
         $usuarios = User::all();
+        $materiales = Material::all();
+        $refacciones = Refaccion::all();
         if(!isset($detalle)){
             $detalle = Correctivo::first();
 
@@ -137,7 +150,7 @@ class OrdenCorrectivoController extends Controller
                 $detalle = "";
             }
         }
-        return view("admin.correctivo.create_ordenTrabajo", compact("solicitudes","usuarios","detalle"));   
+        return view("admin.correctivo.create_ordenTrabajo", compact("solicitudes","usuarios","detalle","refacciones","materiales"));   
     }
 
     /**
@@ -154,8 +167,10 @@ class OrdenCorrectivoController extends Controller
         ];
 
         $orden = OrdenCorrectivo::find($id);
+        $material = OrdenMaterial::where('orden_correctivo_id', $id)->get();
+        $refaccion = OrdenRefaccion::where('orden_correctivo_id', $id)->get();
     
-        return PDF::loadView("admin.correctivo.show_ordenes",compact("orden"), $data)
+        return PDF::loadView("admin.correctivo.show_ordenes",compact("orden","material","refaccion"), $data)
             ->stream('archivo.pdf'); 
     }
 
@@ -177,7 +192,7 @@ class OrdenCorrectivoController extends Controller
      * @param  \App\Models\OrdenCorrectivo  $ordenCorrectivo
      * @return \Illuminate\Http\Response
      */
-    public function destroy(OrdenCorrectivo $ordenCorrectivo)
+    public function destroy($id)
     {
         //
     }

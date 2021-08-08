@@ -18,6 +18,8 @@ class VerificacionController extends Controller
      */
     public function index(Request $request)
     {
+        
+
         if($request){
             $departamentos = Departamento::all();
             $departamento = trim($request->get('departamento_id'));

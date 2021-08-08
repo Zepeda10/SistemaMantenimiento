@@ -8,6 +8,8 @@ use App\Models\OrdenImagen;
 use App\Models\OrdenEquipo;
 use App\Models\User;
 use App\Models\Equipo;
+use App\Models\Refaccion;
+use App\Models\Material;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade as PDF;
@@ -200,6 +202,16 @@ class OrdenController extends Controller
     public function byUser($id)
     {
         return User::where('id', $id)->get();
+    }
+
+    public function byRefaccion($id)
+    {
+        return Refaccion::where('id', $id)->get();
+    }
+
+    public function byMaterial($id)
+    {
+        return Material::where('id', $id)->get();
     }
 
 }

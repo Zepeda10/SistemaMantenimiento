@@ -163,13 +163,12 @@
               @foreach  ($dayweek['evento'] as $event) 
                     <p class="p-1 my-1 text-white rounded bg-danger">
                         ID: {{ $event->id }}
-                    </p>
-                    <p class="p-1 my-1 text-white rounded bg-danger">
+                        <br>
                         {{ $event->departamento->nombre }}
-                    </p>
-                    <p class="p-1 my-1 text-white rounded bg-danger">
+                        <br>
                         {{ $event->equipo->nombre }}
                     </p>
+                   
               @endforeach
             </div>
           @else

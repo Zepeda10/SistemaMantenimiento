@@ -58,7 +58,7 @@ class CustomAuthController extends Controller
         $data = $request->all();
         $check = Registro::create($data);
          
-        return redirect("panel")->withSuccess('You have signed-in');
+        return redirect("login")->withSuccess('You have signed-in');
     }
 
 

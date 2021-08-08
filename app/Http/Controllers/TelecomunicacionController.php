@@ -93,9 +93,12 @@ class TelecomunicacionController extends Controller
      * @param  \App\Models\Telecomunicacion  $telecomunicacion
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Telecomunicacion $telecomunicacion)
+    public function destroy($id)
     {
-        //
+        $tel = Telecomunicacion::findOrFail($id);
+        $tel->delete();
+
+        return redirect()->route('telecomunicaciones.index');
     }
 
     public function internet(Request $request){
@@ -129,14 +132,14 @@ class TelecomunicacionController extends Controller
 
             if($departamento){
                 $datos = Telecomunicacion::where('departamento_id', '=', $departamento)
-                        ->where('tipo', 'internet')
+                        ->where('tipo', 'correo')
                         ->orderBy('id','asc')
                         ->paginate(8);
     
                 return view("admin.telecomunicaciones.correo",compact("datos","departamentos")); 
 
             }else if(!$departamento or $departamento==0){
-                $datos = Telecomunicacion::where('tipo', 'internet')->paginate(8);
+                $datos = Telecomunicacion::where('tipo', 'correo')->paginate(8);
                 $departamentos = Departamento::all();
                // return "dos";
                return view("admin.telecomunicaciones.correo",compact("datos","departamentos")); 
@@ -151,14 +154,14 @@ class TelecomunicacionController extends Controller
 
             if($departamento){
                 $datos = Telecomunicacion::where('departamento_id', '=', $departamento)
-                        ->where('tipo', 'internet')
+                        ->where('tipo', 'telefono')
                         ->orderBy('id','asc')
                         ->paginate(8);
     
                 return view("admin.telecomunicaciones.telefono",compact("datos","departamentos")); 
 
             }else if(!$departamento or $departamento==0){
-                $datos = Telecomunicacion::where('tipo', 'internet')->paginate(8);
+                $datos = Telecomunicacion::where('tipo', 'telefono')->paginate(8);
                 $departamentos = Departamento::all();
                // return "dos";
                return view("admin.telecomunicaciones.telefono",compact("datos","departamentos")); 

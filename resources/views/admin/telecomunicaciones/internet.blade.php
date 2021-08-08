@@ -122,7 +122,7 @@
 					</td>
 
                     <td>
-						<form class="form-eliminar" action="#" method="post" accept-charset="utf-8">
+						<form class="form-eliminar" action="{{route('telecomunicaciones.destroy',$dato)}}" method="post" accept-charset="utf-8">
 						    @csrf
 							@method('delete')
 							<button class="boton-verde" type="submit">

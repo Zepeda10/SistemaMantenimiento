@@ -129,6 +129,12 @@ class CorrectivoController extends Controller
         return view("admin.correctivo.solicitudes_correctivo",compact("datos","departamentos")); 
         */
 
+        //SELECT * FROM correctivos WHERE id NOT IN (SELECT correctivo_id FROM orden_correctivos)
+       /* $result = DB::table('exams')->whereNotIn('id', function($q){
+            $q->select('correctivo_id')->from('orden_correctivos');
+        })->get();
+        */
+
         if($request){
             $departamentos = Departamento::all();
             $buscar = trim($request->get('buscar'));
@@ -137,6 +143,9 @@ class CorrectivoController extends Controller
             if($buscar and $departamento==0){
                 $datos = Correctivo::where('fecha','=', $buscar)
                         ->orderBy('id','asc')
+                        ->whereNotIn('id', function($q){
+                            $q->select('correctivo_id')->from('orden_correctivos');
+                        })
                         ->paginate(8);
                         
                 return view("admin.correctivo.solicitudes_correctivo",compact("datos","departamentos","buscar"));
@@ -144,18 +153,26 @@ class CorrectivoController extends Controller
             }else if($buscar and $departamento){
                 $datos = Correctivo::where([['fecha','=', $buscar], ['departamento_id', 'LIKE', '%'.$departamento.'%']])
                         ->orderBy('id','asc')
+                        ->whereNotIn('id', function($q){
+                            $q->select('correctivo_id')->from('orden_correctivos');
+                        })
                         ->paginate(8);
                 return view("admin.correctivo.solicitudes_correctivo",compact("datos","departamentos","buscar"));
  
             }else if(!$buscar and $departamento){
                 $datos = Correctivo::where('departamento_id', 'LIKE', '%'.$departamento.'%')
                         ->orderBy('id','asc')
+                        ->whereNotIn('id', function($q){
+                            $q->select('correctivo_id')->from('orden_correctivos');
+                        })
                         ->paginate(10);
                 return view("admin.correctivo.solicitudes_correctivo",compact("datos","departamentos","buscar"));
 
             }else if(!$buscar and !$departamento){
                 $departamentos = Departamento::all();
-                $datos = Correctivo::paginate(8);
+                $datos = Correctivo::whereNotIn('id', function($q){
+                    $q->select('correctivo_id')->from('orden_correctivos');
+                })->paginate(8);
                         
                 return view("admin.correctivo.solicitudes_correctivo",compact("datos","departamentos","buscar"));
             } 
