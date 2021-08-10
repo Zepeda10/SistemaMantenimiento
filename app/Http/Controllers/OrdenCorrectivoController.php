@@ -79,7 +79,18 @@ class OrdenCorrectivoController extends Controller
      */
     public function store(Request $request)
     {
-         
+        $request->validate([
+            'nombre' => 'required',
+            'fecha' => 'required',
+            'user_id' => 'required',
+            'departamento_id' => 'required',
+            'refacciones' => 'required',
+            'materiales' => 'required',
+            'resumen' => 'required',
+            'conclusion' => 'required',
+            'img_antes' => 'required',
+            'img_despues' => 'required',
+        ]);
         $entrada = new OrdenCorrectivo();
         $entrada->tipo_mantenimiento = $request->tipo_mantenimiento;
         $entrada->tipo_servicio = $request->tipo_servicio;
@@ -138,11 +149,24 @@ class OrdenCorrectivoController extends Controller
      */
     public function show($id)
     {
-        $solicitudes = Correctivo::all();
-        $detalle = Correctivo::find($id);
+        //$solicitudes = Correctivo::all();
+        $solicitudes = Correctivo::whereNotIn('id', function($q){
+            $q->select('correctivo_id')->from('orden_correctivos');
+        })->get();
+        
+        $comprueba = OrdenCorrectivo::firstOrFail()->where('correctivo_id', $id)->first();
+
+        if(!isset($comprueba)){
+            $detalle = Correctivo::find($id);
+        }else{
+            $detalle = "";
+        }
+        
+
         $usuarios = User::all();
         $materiales = Material::all();
         $refacciones = Refaccion::all();
+        
         if(!isset($detalle)){
             $detalle = Correctivo::first();
 
@@ -150,7 +174,7 @@ class OrdenCorrectivoController extends Controller
                 $detalle = "";
             }
         }
-        return view("admin.correctivo.create_ordenTrabajo", compact("solicitudes","usuarios","detalle","refacciones","materiales"));   
+       return view("admin.correctivo.create_ordenTrabajo", compact("solicitudes","usuarios","detalle","refacciones","materiales"));   
     }
 
     /**

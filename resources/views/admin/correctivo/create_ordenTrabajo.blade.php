@@ -62,18 +62,27 @@
                                         <option value="{{ $usuario->id }}">{{ $usuario->id }}</option>
                                     @endforeach
                                 </select>
+                                @error('user_id')
+                                    <small class="text-danger">*{{ $message }}</small>
+                                @enderror
                             </div>           
                         </div>
                         <div class="row my-2">
                             <div class="col">
                                 <label for="nombre">Nombre(s)</label>
                                 <input type="text" class="form-control border border-secondary" id="name" name="nombre" placeholder="Nombre" readonly>
+                                @error('nombre')
+                                    <small class="text-danger">*{{ $message }}</small>
+                                @enderror
                             </div>           
                         </div>
                         <div class="row my-2">
                             <div class="col">
                                 <label for="fecha">Fecha</label>
                                 <input type="date" class="form-control border border-secondary" name="fecha">
+                                @error('fecha')
+                                    <small class="text-danger">*{{ $message }}</small>
+                                @enderror
                             </div>           
                         </div>
                         <div class="row my-2">
@@ -125,6 +134,9 @@
                                         <option value="{{ $r->id }}">{{ $r->nombre }}</option>
                                     @endforeach
                                 </select>
+                                @error('refacciones')
+                                    <small class="text-danger">*{{ $message }}</small>
+                                @enderror
                             </div>           
                         </div>
                         <div class="row my-2">
@@ -135,6 +147,9 @@
                                         <option value="{{ $m->id }}">{{ $m->nombre }}</option>
                                     @endforeach
                                 </select>
+                                @error('materiales')
+                                    <small class="text-danger">*{{ $message }}</small>
+                                @enderror
                             </div>           
                         </div>
                         <div class="row my-2">
