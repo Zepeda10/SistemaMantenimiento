@@ -229,7 +229,14 @@ class EquipoController extends Controller
      */
     public function show($id)
     {
-        //
+        $equipo = Equipo::findOrFail($id);
+        if($equipo->nombre == "Computadora de escritorio" || $equipo->nombre == "Laptop"){
+            $imagen = ImgCompu::where('equipo_id', '=', $id)->firstOrFail();
+        }else{
+            $imagen = ImgEquipo::where('equipo_id', '=', $id)->firstOrFail();
+        }
+        
+        return view("admin.equipos.show", compact("imagen","equipo"));
     }
 
     /**
