@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Correctivo;
+use App\Models\OrdenCorrectivo;
 use App\Models\Departamento;
 use App\Models\Equipo;
 
@@ -91,7 +92,10 @@ class CalendarioCorrectivoController extends Controller
    
    
                  //CONSULTA PARA VER DEPARTAMENTOS EN CALENDARIO
-                 $datanew['evento'] = Correctivo::where("fecha",$datafecha)->get();
+                 //$datanew['evento'] = Correctivo::where("fecha",$datafecha)->get();
+                 $datanew['evento'] =  Correctivo::whereNotIn('id', function($q){
+                    $q->select('correctivo_id')->from('orden_correctivos');
+                })->where("fecha",$datafecha)->get();
                  /*
                  $datanew['evento'] = cronogramaFecha::
                    join('cronograma_preventivos', 'cronograma_preventivos.id', '=', 'cronograma_fechas.cronograma_preventivo_id')
@@ -177,12 +181,24 @@ class CalendarioCorrectivoController extends Controller
         $departamentos = Departamento::all();
         $equipos = Equipo::all();
         $detalle = Correctivo::find($id);
-        $todos = Correctivo::all();
+        //$todos = Correctivo::all();
+        $todos = Correctivo::whereNotIn('id', function($q){
+            $q->select('correctivo_id')->from('orden_correctivos');
+        })->get();
+
+        $comprueba = OrdenCorrectivo::firstOrFail()->where('correctivo_id', $id)->first();
+
+        if(!isset($comprueba)){
+            $detalle = Correctivo::find($id);
+        }else{
+            $detalle = "";
+        }
+        
         if(!isset($detalle)){
             $detalle = Correctivo::first();
 
             if(!$detalle){
-              $detalle = "";
+              $detalle = ""; 
           }
         }
         

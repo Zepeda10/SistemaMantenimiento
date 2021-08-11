@@ -84,8 +84,6 @@ class OrdenCorrectivoController extends Controller
             'fecha' => 'required',
             'user_id' => 'required',
             'departamento_id' => 'required',
-            'refacciones' => 'required',
-            'materiales' => 'required',
             'resumen' => 'required',
             'conclusion' => 'required',
             'img_antes' => 'required',
