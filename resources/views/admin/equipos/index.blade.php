@@ -108,7 +108,7 @@
                 <th>Tipo de Equipo</th>
                 <th>Departamento</th>
                 <th>Estado</th>
-				<th>Imágenes</th>
+				<th>Características</th>
                 <th>Editar</th>
                 <th>Eliminar</th>
             </tr>
