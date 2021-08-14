@@ -151,7 +151,7 @@ class OrdenCorrectivoController extends Controller
         $solicitudes = Correctivo::whereNotIn('id', function($q){
             $q->select('correctivo_id')->from('orden_correctivos');
         })->get();
-        
+        /*
         $comprueba = OrdenCorrectivo::firstOrFail()->where('correctivo_id', $id)->first();
 
         if(!isset($comprueba)){
@@ -159,11 +159,13 @@ class OrdenCorrectivoController extends Controller
         }else{
             $detalle = "";
         }
+        */
         
 
         $usuarios = User::all();
         $materiales = Material::all();
         $refacciones = Refaccion::all();
+        $detalle = Correctivo::find($id);
         
         if(!isset($detalle)){
             $detalle = Correctivo::first();
@@ -172,6 +174,7 @@ class OrdenCorrectivoController extends Controller
                 $detalle = "";
             }
         }
+        
        return view("admin.correctivo.create_ordenTrabajo", compact("solicitudes","usuarios","detalle","refacciones","materiales"));   
     }
 

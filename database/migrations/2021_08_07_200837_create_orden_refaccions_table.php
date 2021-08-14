@@ -20,7 +20,8 @@ class CreateOrdenRefaccionsTable extends Migration
 
             $table->foreign('orden_correctivo_id') //Indicando llave foránea
                     ->references('id')->on('orden_correctivos')
-                    ->onDelete('set null');
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
 
             $table->foreign('refaccion_id') //Indicando llave foránea
                     ->references('id')->on('refaccions')

@@ -26,7 +26,8 @@ class CreateImgEquiposTable extends Migration
 
             $table->foreign('equipo_id') //Indicando llave foránea
                     ->references('id')->on('equipos')
-                    ->onDelete('set null');
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
         });
     }
 

@@ -129,9 +129,12 @@ class VerificacionController extends Controller
      * @param  \App\Models\Verificacion  $verificacion
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Verificacion $verificacion)
+    public function destroy($id)
     {
-        //
+        $verificacion = Verificacion::findOrFail($id);
+        $verificacion->delete();
+
+        return redirect()->route('verificaciones.index');
     }
 
     public function byDepartament($id)

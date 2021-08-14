@@ -57,8 +57,7 @@
             @if($detalle != "" )  
                 <h3 class="text-center">Nueva Fecha</h3>
 					    
-               
-                      
+                
                 <div class="row justify-content-center">
                     <div class="col-md-5">
                         <form action="{{route('correctivo.update',$detalle)}}" method="post" accept-charset="utf-8">

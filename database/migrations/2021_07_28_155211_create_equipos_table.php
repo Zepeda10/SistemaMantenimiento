@@ -16,6 +16,7 @@ class CreateEquiposTable extends Migration
         Schema::create('equipos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre',100);
+            $table->string('noInventario',100);
             $table->unsignedBigInteger('departamento_id')->nullable(); //Creando llave foránea   
             $table->timestamps();
 

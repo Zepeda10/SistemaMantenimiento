@@ -21,11 +21,13 @@ class CreateCronogramaFechasTable extends Migration
 
             $table->foreign('cronograma_preventivo_id') //Indicando llave foránea
                     ->references('id')->on('cronograma_preventivos')
-                    ->onDelete('set null');
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
 
             $table->foreign('fechas_preventivo_id') //Indicando llave foránea
                     ->references('id')->on('fechas_preventivos')
-                    ->onDelete('set null');
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
         });
     }
 

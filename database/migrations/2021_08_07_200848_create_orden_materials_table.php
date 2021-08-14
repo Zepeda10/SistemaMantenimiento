@@ -20,7 +20,8 @@ class CreateOrdenMaterialsTable extends Migration
 
             $table->foreign('orden_correctivo_id') //Indicando llave foránea
                     ->references('id')->on('orden_correctivos')
-                    ->onDelete('set null');
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
 
             $table->foreign('material_id') //Indicando llave foránea
                     ->references('id')->on('materials')

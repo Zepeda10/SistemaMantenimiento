@@ -16,7 +16,7 @@ class CalendarioCorrectivoController extends Controller
   
             $month = date("Y-m");
             //
-            $data = $this->calendar_month($month);
+            $data = $this->calendar_month($month); 
             $mes = $data['month'];
             // obtener mes en espanol
             $mespanish = $this->spanish_month($mes);
@@ -186,13 +186,15 @@ class CalendarioCorrectivoController extends Controller
             $q->select('correctivo_id')->from('orden_correctivos');
         })->get();
 
+        /*
         $comprueba = OrdenCorrectivo::firstOrFail()->where('correctivo_id', $id)->first();
 
-        if(!isset($comprueba)){
+        if(!isset($comprueba)){ 
             $detalle = Correctivo::find($id);
         }else{
             $detalle = "";
         }
+        */
         
         if(!isset($detalle)){
             $detalle = Correctivo::first();

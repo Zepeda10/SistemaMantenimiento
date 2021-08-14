@@ -34,7 +34,8 @@ class CreateOrdenCorrectivosTable extends Migration
 
             $table->foreign('correctivo_id') //Indicando llave foránea
                     ->references('id')->on('correctivos')
-                    ->onDelete('set null');
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
 
             $table->timestamps();
         });

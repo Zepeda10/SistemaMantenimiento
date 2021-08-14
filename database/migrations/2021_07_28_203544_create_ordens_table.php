@@ -20,10 +20,10 @@ class CreateOrdensTable extends Migration
             $table->string('nombre',100); 
             $table->string('fecha',100); 
             $table->unsignedBigInteger('departamento_id')->nullable(); //Creando llave foránea
-            $table->string('refacciones',200); 
-            $table->string('materiales',200); 
             $table->string('resumen',300); 
             $table->string('conclusion',300); 
+            $table->string('refacciones',300); 
+            $table->string('materiales',300); 
 
             $table->foreign('user_id') //Indicando llave foránea
                     ->references('id')->on('users')

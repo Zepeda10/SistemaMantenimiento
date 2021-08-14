@@ -21,11 +21,13 @@ class CreateVerificacionEquiposTable extends Migration
 
             $table->foreign('verificacion_id') //Indicando llave foránea
                     ->references('id')->on('verificacions')
-                    ->onDelete('set null');
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
 
             $table->foreign('equipo_id') //Indicando llave foránea
                     ->references('id')->on('equipos')
-                    ->onDelete('set null');
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
         });
     }
 

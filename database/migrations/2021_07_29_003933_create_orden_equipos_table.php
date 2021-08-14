@@ -20,11 +20,13 @@ class CreateOrdenEquiposTable extends Migration
 
             $table->foreign('orden_id') //Indicando llave foránea
                     ->references('id')->on('ordens')
-                    ->onDelete('set null');
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
 
             $table->foreign('equipo_id') //Indicando llave foránea
                     ->references('id')->on('equipos')
-                    ->onDelete('set null');
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
             $table->timestamps();
         });
     }
