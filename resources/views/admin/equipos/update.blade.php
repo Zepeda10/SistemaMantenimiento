@@ -17,6 +17,7 @@
                                 <select name="estado" class="form-control border border-secondary">
                                     <option value="activo" @if($equipo->estado == "activo") selected  @endif >Activo</option>
                                     <option value="en reparación" @if($equipo->estado == "en reparación") selected  @endif>En reparación</option>
+                                    <option value="en reparación" @if($equipo->estado == "baja") selected  @endif>Baja</option>
                                 </select>
                             </div> 
                             <div class="col">

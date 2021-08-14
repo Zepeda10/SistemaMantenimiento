@@ -17,6 +17,7 @@
                                 <select name="estado" class="form-control border border-secondary" id="">
                                     <option value="activo">Activo</option>
                                     <option value="en reparación">En reparación</option>
+                                    <option value="baja">Baja</option>
                                 </select>
                             </div> 
                             <div class="col">

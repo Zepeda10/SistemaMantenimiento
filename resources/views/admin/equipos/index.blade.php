@@ -137,6 +137,8 @@
 							<p class="d-inline p-1 rounded bg-success text-white">{{$equipo->estado}}</p>
 						@elseif($equipo->estado == "en reparación")
 							<p class="d-inline p-1 rounded bg-warning text-white">{{$equipo->estado}}</p>
+						@elseif($equipo->estado == "baja")
+							<p class="d-inline p-1 rounded bg-danger text-white">{{$equipo->estado}}</p>
 						@endif
 					</td>
 					<td>
