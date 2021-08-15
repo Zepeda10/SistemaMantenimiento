@@ -68,19 +68,27 @@
                         <div class="row my-2">
                             <div class="col">
                                 <label for="refacciones">Refacciones</label>
-                                <select name="refacciones" class="form-control border border-secondary" id="refacciones">
-                                    <option value="r1">Refacción 1</option> 
-                                    <option value="r2">Refacción 2</option> 
+                                <select class="selectpicker" multiple data-live-search="true" name="refaccion_id[]" id="refacciones">
+                                    @foreach($refacciones as $r)
+                                        <option value="{{ $r->id }}">{{ $r->nombre }}</option>
+                                    @endforeach
                                 </select>
+                                @error('refacciones')
+                                    <small class="text-danger">*{{ $message }}</small>
+                                @enderror
                             </div>           
                         </div>
                         <div class="row my-2">
                             <div class="col">
                                 <label for="materiales">Materiales</label>
-                                <select name="materiales" class="form-control border border-secondary" id="materiales">
-                                    <option value="m1">Material 1</option> 
-                                    <option value="m2">Material 2</option> 
+                                <select class="selectpicker" multiple data-live-search="true" name="material_id[]" id="materiales">
+                                    @foreach($materiales as $m)
+                                        <option value="{{ $m->id }}">{{ $m->nombre }}</option>
+                                    @endforeach
                                 </select>
+                                @error('materiales')
+                                    <small class="text-danger">*{{ $message }}</small>
+                                @enderror
                             </div>           
                         </div>
                         <div class="row my-2">

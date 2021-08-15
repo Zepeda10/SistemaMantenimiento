@@ -149,9 +149,13 @@
                     <p><span style="font-style:bold;">DESCRIPCIÓN DEL MANTENIMIENTO:</span></p>
                     <p>{{$orden->resumen}}</p>
                     <p><span style="font-style:bold;">REFACCIONES UTILIZADAS:</span></p>
-                    <p>{{$orden->refacciones}}</p>
+                        @foreach($refaccion as $d)	
+                            {{$d->refaccion->nombre}}				                  					
+                        @endforeach	  
                     <p><span style="font-style:bold;">MATERIALES UTILIZADOS:</span></p>
-                    <p>{{$orden->materiales}}</p>
+                        @foreach($material as $d)	
+                            {{$d->material->nombre}}				                  					
+                        @endforeach	 
                     <p><span style="font-style:bold;">CONCLUSIÓN:</span></p>
                     <p>{{$orden->conclusion}}</p>
                     <div class="espacio">

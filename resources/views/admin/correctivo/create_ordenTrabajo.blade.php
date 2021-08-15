@@ -151,7 +151,7 @@
                                     <small class="text-danger">*{{ $message }}</small>
                                 @enderror
                             </div>           
-                        </div>
+                        </div> 
                         <div class="row my-2">
                             <div class="col">
                                 <label for="resumen">Resumen</label>

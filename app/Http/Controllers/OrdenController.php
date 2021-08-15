@@ -10,6 +10,8 @@ use App\Models\User;
 use App\Models\Equipo;
 use App\Models\Refaccion;
 use App\Models\Material;
+use App\Models\OrdenpreventivoRefaccion;
+use App\Models\OrdenpreventivoMaterial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade as PDF;
@@ -55,7 +57,9 @@ class OrdenController extends Controller
     {
         $departamentos = Departamento::all();
         $usuarios = User::all();
-        return view("admin.preventivo.create_ordenes", compact("departamentos","usuarios"));
+        $materiales = Material::all();
+        $refacciones = Refaccion::all();
+        return view("admin.preventivo.create_ordenes", compact("departamentos","usuarios","materiales","refacciones"));
     }
 
     /**
@@ -72,8 +76,6 @@ class OrdenController extends Controller
             'user_id' => 'required',
             'fecha' => 'required',
             'departamento_id' => 'required',
-            'refacciones' => 'required',
-            'materiales' => 'required',
             'resumen' => 'required',
             'conclusion' => 'required',
             'img_antes' => 'required',
@@ -86,8 +88,6 @@ class OrdenController extends Controller
         $entrada1->nombre = $request->nombre;
         $entrada1->fecha = $request->fecha;
         $entrada1->departamento_id = $request->departamento_id;
-        $entrada1->refacciones = $request->refacciones;
-        $entrada1->materiales = $request->materiales;
         $entrada1->resumen = $request->resumen;
         $entrada1->conclusion = $request->conclusion;
        
@@ -123,6 +123,22 @@ class OrdenController extends Controller
           $equipo->equipo_id = $tag;
           $equipo->orden_id = $ide->id;
           $equipo->save();
+       }     
+        
+        $tags = $request->input('material_id');
+        foreach($tags as $tag){
+          $material = new OrdenpreventivoMaterial();
+          $material->material_id = $tag;
+          $material->orden_id = $ide->id;
+          $material->save();
+       }
+
+       $tags2 = $request->input('refaccion_id');
+        foreach($tags2 as $tag){
+          $refaccion = new OrdenpreventivoRefaccion();
+          $refaccion->refaccion_id = $tag;
+          $refaccion->orden_id = $ide->id;
+          $refaccion->save();
        }
 
         $ide_img = OrdenImagen::latest('id')->first(); 
@@ -154,8 +170,10 @@ class OrdenController extends Controller
         $equipos = Equipo::all();
         $imagenes = OrdenImagen::where('orden_id', $id)->get();
         $detalle = OrdenEquipo::where('orden_id', $id)->get();
+        $material = OrdenpreventivoMaterial::where('orden_id', $id)->get();
+        $refaccion = OrdenpreventivoRefaccion::where('orden_id', $id)->get();
     
-        return PDF::loadView("admin.preventivo.show_ordenes",compact("detalle","orden","equipos","imagenes"), $data)
+        return PDF::loadView("admin.preventivo.show_ordenes",compact("detalle","orden","equipos","imagenes","material","refaccion"), $data)
             ->stream('archivo.pdf');
         
     }
