@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CronogramaPreventivo;
 use App\Models\Departamento;
+use App\Models\User;
 use App\Models\fechasPreventivo;
 use App\Models\cronogramaFecha;
 use Illuminate\Http\Request;
@@ -159,11 +160,16 @@ class CronogramaPreventivoController extends Controller
         //
     }
 
-    public function enviarCorreo(){
+    public function enviarCorreo(){ 
 
-        $id = CronogramaPreventivo::latest('id')->first();    
-
-        $data["email"] = Auth::user()->email;
+        $id = CronogramaPreventivo::latest('id')->first(); 
+        
+        $correo = User::where('departamento_id', '=', $id->departamento_id)
+                    ->where('cargo', '=', 'Jefe')
+                    ->firstOrFail();
+     
+       // $data["email"] = Auth::user()->email;
+        $data["email"] = $correo->email;
         $data["title"] = "Oficio PDF";
         $data["body"] = "Oficio de cronograma en PDF";
 
@@ -187,7 +193,7 @@ class CronogramaPreventivoController extends Controller
         });
   
         return redirect()->route('admin.cronograma');
-
+        
         
     }
 
