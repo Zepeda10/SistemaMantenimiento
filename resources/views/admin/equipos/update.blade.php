@@ -1,3 +1,6 @@
+@if (Auth::user()->role_id != 1 and Auth::user()->role_id != 2)
+	<script>window.location = "/dashboard";</script>
+@endif
 @extends('dashboard')
 @section('title', 'Equipos')
 @section('content')

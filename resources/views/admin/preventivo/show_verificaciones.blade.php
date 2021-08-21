@@ -1,4 +1,4 @@
-@if (Auth::user()->cargo!="Administrador")
+@if (Auth::user()->role_id != 1)
 	<script>window.location = "/dashboard";</script>
 @endif
 
@@ -147,6 +147,9 @@
                             <li>{{$d->equipo->nombre}}</li>					                  					
                         @endforeach	               
                     </ul>
+
+                    <p><span style="font-style:bold;">PERIODO:</span></p>
+                    <p>{{$verificacion->periodo}}</p>
                     
                 </td>           
             </tr>  
@@ -161,7 +164,7 @@
             </tr>
             <tr>
                 <td class="g">JEFE DEL AREA VERIFICADA</td>              
-                <td class="g"></td>           
+                <td class="g">{{$jefe->name}} {{$jefe->ap_paterno}} {{$jefe->ap_materno}}</td>           
             </tr>  
         </tbody>
     </table>

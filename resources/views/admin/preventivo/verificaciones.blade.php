@@ -1,4 +1,4 @@
-@if (Auth::user()->cargo!="Administrador")
+@if (Auth::user()->role_id != 1)
 	<script>window.location = "/dashboard";</script>
 @endif
 
@@ -66,18 +66,8 @@
 <div class="contenido">
     <h2 class="text-center">Verificaciones</h2>
 
-	@if (Auth::user()->cargo=="Administrador")
-
-	    <button class="btn btn-primary d-inline-block my-3"><a href="{{route('verificaciones.index')}}" class="text-decoration-none text-white">Verificaciones</a></button>
-	    <button class="btn btn-primary d-inline-block my-3"><a href="{{route('admin.cronograma')}}" class="text-decoration-none text-white">Cronograma</a></button>
-	    <button class="btn btn-primary d-inline-block my-3"><a href="{{route('oficios.index')}}" class="text-decoration-none text-white">Oficios</a></button>
-	    <button class="btn btn-primary d-inline-block my-3"><a href="{{route('ordenes.index')}}" class="text-decoration-none text-white">Órdenes</a></button>
-	    <div class="d-block"></div>
-
-    @endif
-
     <button class="boton-regresar">
-        <a class="text-decoration-none text-white" href="{{route('dashboard')}}">
+        <a class="text-decoration-none text-white" href="{{route('admin.preverificacion')}}">
 			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-square" viewBox="0 0 16 16">
 				<path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm11.5 5.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
 			</svg>
@@ -85,12 +75,9 @@
 		</a>
     </button>
 
-    <button class="boton-verde" style="margin-left:15px;">
-        <a class="text-decoration-none text-white" href="{{route('verificaciones.create')}}">Agregar</a>
-    </button>
-
 	<div class="col-md-7">
-		<form id="form" action="{{route('verificaciones.index')}}" method="get" class="mt-2 mb-5">
+		<form id="form" action="{{route('verificaciones.index',$indicador)}}" method="get" class="mt-2 mb-5">
+		<input type="hidden" name="indicador" value="depa">
 			<div class="row mb-4">
 				<div class="col">
 					<select class="form-control" name="departamento_id">
@@ -104,14 +91,34 @@
 					<button type="submit" class="btn btn-secondary d-inline">Buscar</button>
 				</div>
 			</div>
-		</form>
+		</form>	
 	</div>
 
-    <table class="table">
+	<div class="col-md-7 " style="margin-top: -86px; margin-left: 600px;">
+		<form id="form" action="{{route('verificaciones.index',$indicador)}}" method="get" class="mt-2 mb-5">
+			<input type="hidden" name="indicador" value="peri">
+			<div class="row mb-4">
+				<div class="col">
+					<select class="form-control" name="periodo">
+						<option value="0">Periodo</option>
+						<option value="AGOSTO - ENERO">AGOSTO - ENERO</option>
+                        <option value="ENERO - JUNIO">ENERO - JUNIO</option>
+					</select>
+				</div>
+				<div class="col">
+					<button type="submit" class="btn btn-secondary d-inline-block">Buscar</button>
+				</div>
+			</div>
+		</form>	
+	</div>
+
+
+    <table class="table" id="table">
         <thead>
             <tr>
                 <th>Departamento</th>
                 <th>Fecha</th> 
+				<th>Periodo</th> 
                 <th>PDF</th>
 				<th>Eliminar</th>
             </tr>
@@ -125,6 +132,10 @@
 
 					<td>
 						<p>{{$verif->created_at}}</p>
+					</td>
+
+					<td>
+						<p>{{$verif->periodo}}</p>
 					</td>
 
                     <td>
@@ -157,6 +168,7 @@
 		{{ $verificaciones->appends(request()->input())->links() }} 
 	</div>	
 </div>
+
 @endsection
 		
 		

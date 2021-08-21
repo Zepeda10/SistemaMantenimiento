@@ -12,6 +12,7 @@ use App\Http\Controllers\CalendarioPreventivoController;
 use App\Http\Controllers\CalendarioCorrectivoController;
 use App\Http\Controllers\CorrectivoController;
 use App\Http\Controllers\OrdenCorrectivoController;
+use App\Http\Controllers\PreventivosController;
 use App\Http\Controllers\GraficaController;
 use App\Http\Controllers\EquipoController;
 
@@ -61,6 +62,14 @@ Route::get('admin/agregar-internet', [TelecomunicacionController::class, 'formIn
 Route::get('admin/agregar-correo', [TelecomunicacionController::class, 'formCorreo'])->name('jefe.correo'); 
 Route::get('admin/agregar-telefono', [TelecomunicacionController::class, 'formTelefono'])->name('jefe.telefono'); 
 
+Route::get('admin/ver-solicitudes', [TelecomunicacionController::class, 'verSolicitudes'])->name('admin.versolicitudes'); 
+Route::get('admin/solicitudes-atendidas', [TelecomunicacionController::class, 'verAtendidas'])->name('admin.veratendidas'); 
+
+Route::get('admin/atendidas-correo', [TelecomunicacionController::class, 'atendidoCorreo'])->name('admin.atencorreo');
+Route::get('admin/atendidas-internet', [TelecomunicacionController::class, 'atendidoInternet'])->name('admin.ateninternet');
+Route::get('admin/atendidas-telefono', [TelecomunicacionController::class, 'atendidoTelefono'])->name('admin.atentelefono');
+Route::get('admin/atendidas-eliminar', [TelecomunicacionController::class, 'eliminaAtendida'])->name('admin.eliminatendida');
+
 Route::get('admin/cronograma', [CalendarioPreventivoController::class, 'index'])->name('admin.cronograma'); 
 Route::get('admin/cronograma/{month}', [CalendarioPreventivoController::class, 'index_month'])->name('admin.mes');
 
@@ -70,7 +79,17 @@ Route::get('admin/cronograma-correctivo', [CalendarioCorrectivoController::class
 Route::get('admin/cronograma-correctivo/{month}', [CalendarioCorrectivoController::class, 'index_month'])->name('correctivo.cronogramames');
 Route::get('admin/cronograma-actualizar-fecha/{id}', [CalendarioCorrectivoController::class, 'actualizar_fecha'])->name('cronograma.addfecha'); 
 
-Route::post('enviar-correo', [CronogramaPreventivoController::class, 'enviarCorreo'])->name('enviar.correo'); 
+Route::post('enviar-correo', [CronogramaPreventivoController::class, 'enviarCorreo'])->name('enviar.correo');
+
+Route::get('admin/preventivo', [PreventivosController::class, 'index'])->name('admin.preventivo');
+Route::get('admin/orden-preventivo', [PreventivosController::class, 'orden'])->name('admin.prevorden');
+Route::get('admin/verificacion-preventivo', [PreventivosController::class, 'verificacion'])->name('admin.preverificacion');
+
+Route::get('admin/subir-firma', [VerificacionController::class, 'createFirmadas'])->name('admin.subirfirma');
+Route::post('admin/guarda-firma', [VerificacionController::class, 'storeFirmada'])->name('admin.guardafirma');
+Route::get('admin/ver-firmas', [VerificacionController::class, 'firmadas'])->name('admin.verfirmas');
+
+
 
 
 //Route::post('Evento/calendario', [CalendarioPreventivoController::class, 'calendario']); 

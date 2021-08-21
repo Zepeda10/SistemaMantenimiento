@@ -11,8 +11,8 @@
 
                         <form action="{{ route('register.custom') }}" method="POST">
                             @csrf
-                            <input type="hidden" value="Trabajador" id="cargo" class="form-control"
-                                name="cargo" required autofocus>
+                            <input type="hidden" value="6" id="role_id" class="form-control"
+                                name="role_id" required>
 
                             <div class="form-group mb-3">
                                 <select class="form-control" name="departamento_id">

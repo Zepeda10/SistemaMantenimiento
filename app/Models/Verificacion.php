@@ -22,4 +22,9 @@ class Verificacion extends Model
     {
         return $this->belongsToMany('App\Models\Equipo');
     }
+
+    //Relación uno a muchos
+    public function firmas(){
+    	return $this->hasMany('App\Models\VerificacionesFirmas');
+    }
 }

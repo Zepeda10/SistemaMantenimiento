@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Departamento;
+use App\Models\Role;
 
 class UserController extends Controller
 {
@@ -45,7 +46,8 @@ class UserController extends Controller
     public function create()
     {
         $departamentos = Departamento::all();
-        return view("admin.usuarios.create", compact("departamentos"));
+        $roles = Role::all();
+        return view("admin.usuarios.create", compact("departamentos","roles"));
     }
 
     /**
@@ -63,7 +65,7 @@ class UserController extends Controller
             'email' => 'required|email|unique:users',
             'ap_paterno' => 'required|max:80',
             'ap_materno' => 'required|max:80',
-            'cargo' => 'required',
+            'role_id' => 'required',
             'telefono' => 'required|max:10|digits:10',
             'password' => 'required|min:6',
         ]);
@@ -96,7 +98,8 @@ class UserController extends Controller
     {
         $usuario = User::findOrFail($id);
         $departamentos = Departamento::all();
-        return view("admin.usuarios.edit", compact("usuario","departamentos"));
+        $roles = Role::all();
+        return view("admin.usuarios.edit", compact("usuario","departamentos","roles"));
     }
 
     /**
@@ -114,7 +117,7 @@ class UserController extends Controller
             'usuario' => 'required|unique:users,usuario,'.$id,
             'ap_paterno' => 'required|max:80',
             'ap_materno' => 'required|max:80',
-            'cargo' => 'required',
+            'role_id' => 'required',
             'telefono' => 'required|max:10|digits:10',
         ]);
         

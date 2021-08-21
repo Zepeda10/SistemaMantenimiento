@@ -51,7 +51,7 @@ class CustomAuthController extends Controller
             'usuario' => 'required',
             'ap_paterno' => 'required|max:80',
             'ap_materno' => 'required|max:80',
-            'cargo' => 'required',
+            'role_id' => 'required',
             'telefono' => 'required|max:10|digits:10',
         ]);
            
@@ -71,7 +71,7 @@ class CustomAuthController extends Controller
         'usuario' => $data['usuario'],
         'ap_paterno' => $data['ap_paterno'],
         'ap_materno' => $data['ap_materno'],
-        'cargo' => $data['cargo'],
+        'role_id' => $data['cargo'],
         'telefono' => $data['telefono'],
       ]);
     }    

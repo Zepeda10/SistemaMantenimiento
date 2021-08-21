@@ -1,7 +1,6 @@
-@if (Auth::user()->cargo!="Administrador")
+@if (Auth::user()->role_id != 1)
 	<script>window.location = "/dashboard";</script>
 @endif
-
 @extends('dashboard')
 @section('title', 'Usuarios')
 @section('content')
@@ -108,7 +107,7 @@
                 <th>Apellido Materno</th>
                 <th>Teléfono</th>
                 <th>Email</th>
-                <th>Cargo</th>
+                <th>Rol</th>
                 <th>Usuario</th>
                 <th>Departamento</th>
                 <th>Editar</th>
@@ -143,7 +142,11 @@
 					</td>
 
                     <td>
-						<p>{{$user->cargo}}</p>
+						@if($user->role != null)
+							<p>{{$user->role->nombre}}</p>
+						@else
+							<p>Sin rol</p>
+						@endif
 					</td>
 
                     <td>

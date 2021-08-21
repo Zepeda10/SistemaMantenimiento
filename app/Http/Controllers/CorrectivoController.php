@@ -17,7 +17,8 @@ class CorrectivoController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->cargo=="Administrador"){
+        
+        if(Auth::user()->role_id == 1 or Auth::user()->role_id == 4 or Auth::user()->role_id == 5){
             return view("admin.correctivo.index1"); 
         }else{
             return view("admin.correctivo.index2"); 

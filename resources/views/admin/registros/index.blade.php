@@ -1,4 +1,4 @@
-@if (Auth::user()->cargo!="Administrador")
+@if (Auth::user()->role_id != 1)
 	<script>window.location = "/dashboard";</script>
 @endif
 

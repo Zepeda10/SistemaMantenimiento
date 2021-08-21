@@ -1,4 +1,4 @@
-@if (Auth::user()->cargo!="Administrador")
+@if (Auth::user()->role_id != 1)
 	<script>window.location = "/dashboard";</script>
 @endif
 
@@ -12,7 +12,7 @@
             <div class="card">
                 <h3 class="card-header text-center">Agregar Usuario</h3>
                 <div class="card-body">
-                    <form action="{{route('usuarios.store')}}" method="post" accept-charset="utf-8">
+                    <form action="{{route('usuarios.store')}}" method="post" accept-charset="utf-8" autocomplete="off">
                         @csrf
                         <div class="row">
                             <div class="col">
@@ -59,10 +59,11 @@
 
                         <div class="row my-4">
                             <div class="col">
-                                <label for="cargo">Cargo</label>
-                                <select name="cargo" class="form-control border border-secondary" id="">
-                                    <option value="Administrador">Administrador</option>
-                                    <option value="Jefe">Jefe de Departamento</option>
+                                <label for="role_id">Cargo</label>
+                                <select name="role_id" class="form-control border border-secondary" id="">
+                                    @foreach($roles as $rol)
+                                        <option value="{{ $rol->id }}">{{ $rol->nombre }}</option>
+                                    @endforeach
                                 </select>
                             </div>
 

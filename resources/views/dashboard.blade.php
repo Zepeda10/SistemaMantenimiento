@@ -24,20 +24,22 @@
     
     <nav class="navbar navbar-light navbar-expand-lg mb-5" style="background-color: #1b396a;">
         <div class="container">
-        @if (Auth::user()->cargo=="Administrador")
-            <a @if(request()->routeIs('verificaciones.index')) class="navbar-brand mr-auto text-white efecto" @else class="navbar-brand mr-auto text-white" @endif href="{{route('verificaciones.index')}}">Mantenimiento Preventivo</a>
-        @else
-            <a @if(request()->routeIs('admin.cronograma')) class="navbar-brand mr-auto text-white efecto" @else class="navbar-brand mr-auto text-white" @endif href="{{route('admin.cronograma')}}">Mantenimiento Preventivo</a>
-        @endif
+        @if (Auth::user()->role_id != 6 )
+            <a @if(request()->routeIs('admin.preventivo')) class="navbar-brand mr-auto text-white efecto" @else class="navbar-brand mr-auto text-white" @endif href="{{route('admin.preventivo')}}">Mantenimiento Preventivo</a>
+            <a @if(request()->routeIs('correctivo.index')) class="navbar-brand mr-auto text-white efecto" @else class="navbar-brand mr-auto text-white" @endif href="{{route('correctivo.index')}}">Mantenimiento Correctivo</a>
+        @endif 
 
-        <a @if(request()->routeIs('correctivo.index')) class="navbar-brand mr-auto text-white efecto" @else class="navbar-brand mr-auto text-white" @endif href="{{route('correctivo.index')}}">Mantenimiento Correctivo</a>
         <a @if(request()->routeIs('telecomunicaciones.index')) class="navbar-brand mr-auto text-white efecto" @else class="navbar-brand mr-auto text-white" @endif href="{{route('telecomunicaciones.index')}}">Telecomunicaciones</a>
-        <a @if(request()->routeIs('equipos.index')) class="navbar-brand mr-auto text-white efecto" @else class="navbar-brand mr-auto text-white" @endif href="{{route('equipos.index')}}">Activos</a>
-            
-        @if (Auth::user()->cargo=="Administrador")
+       
+        @if (Auth::user()->role_id == 1 or Auth::user()->role_id == 2)
+            <a @if(request()->routeIs('equipos.index')) class="navbar-brand mr-auto text-white efecto" @else class="navbar-brand mr-auto text-white" @endif href="{{route('equipos.index')}}">Activos</a>
+        @endif 
+
+        @if (Auth::user()->role_id == 1)
             <a @if(request()->routeIs('usuarios.index')) class="navbar-brand mr-auto text-white efecto" @else class="navbar-brand mr-auto text-white" @endif href="{{route('usuarios.index')}}">Usuarios</a>
             <a @if(request()->routeIs('solicitudes.index')) class="navbar-brand mr-auto text-white efecto" @else class="navbar-brand mr-auto text-white" @endif href="{{route('solicitudes.index')}}">Solicitudes de acceso</a>
         @endif
+        
         <a @if(request()->routeIs('dashboard')) class="navbar-brand mr-auto text-white efecto" @else class="navbar-brand mr-auto text-white" @endif href="{{route('dashboard')}}">{{Auth::user()->usuario}}</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

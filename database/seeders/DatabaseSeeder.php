@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             'ap_paterno'     => 'ap 1',
             'ap_materno'     => 'ap 2',
             'telefono'     => '1111111111',
-            'cargo'     => 'Administrador',
+            'role_id'     => '1',
             'usuario'     => 'Admin',
             'password'  => bcrypt('123456'),
         ]);

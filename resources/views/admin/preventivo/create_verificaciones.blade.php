@@ -1,4 +1,4 @@
-@if (Auth::user()->cargo!="Administrador")
+@if (Auth::user()->role_id != 1)
 	<script>window.location = "/dashboard";</script>
 @endif
 
@@ -22,6 +22,15 @@
                                     @foreach($departamentos as $departamento)
                                         <option value="{{ $departamento->id }}">{{ $departamento->nombre }}</option>
                                     @endforeach
+                                </select>
+                            </div>           
+                        </div>
+                        <div class="row">
+                            <div class="col my-2">
+                                <label for="periodo">Periodo</label>
+                                <select name="periodo" class="form-control border border-secondary" id="periodo">
+                                    <option value="AGOSTO - ENERO">AGOSTO - ENERO</option>
+                                    <option value="ENERO - JUNIO">ENERO - JUNIO</option>
                                 </select>
                             </div>           
                         </div>

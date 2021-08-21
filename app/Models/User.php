@@ -24,7 +24,7 @@ class User extends Authenticatable
         'ap_materno',
         'usuario',
         'telefono',
-        'cargo',
+        'role_id',
         'departamento_id',
     ];
 
@@ -58,6 +58,11 @@ class User extends Authenticatable
     }
 
     //Relación uno a muchos
+    public function telecomunicacionesAtendidas(){
+    	return $this->hasMany('App\Models\TelecomunicacionAtendida');
+    }
+
+    //Relación uno a muchos
     public function ordenes(){
     	return $this->hasMany('App\Models\Orden');
     }
@@ -65,5 +70,10 @@ class User extends Authenticatable
     //Relación uno a muchos
     public function ordenes_correctivo(){
     	return $this->hasMany('App\Models\OrdenCorrectivo');
+    }
+
+     //Relación uno a muchos inversa
+    public function role(){
+        return $this->belongsTo('App\Models\Role');
     }
 }

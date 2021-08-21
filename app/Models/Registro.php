@@ -17,7 +17,7 @@ class Registro extends Model
         'ap_materno',
         'usuario',
         'telefono',
-        'cargo',
+        'role_id',
         'departamento_id',
     ];
 

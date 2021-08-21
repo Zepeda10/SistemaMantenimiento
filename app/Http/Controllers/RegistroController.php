@@ -85,7 +85,7 @@ class RegistroController extends Controller
 
         $usuario = User::updateOrCreate(
             ['name' => $registro->name, 'ap_paterno' =>$registro->ap_paterno,'usuario' => $registro->usuario, 'password' => Hash::make($registro->password)],
-            ['ap_materno' => $registro->ap_materno, 'telefono' =>$registro->telefono,'email' => $registro->email, 'cargo' =>$registro->cargo,'departamento_id' => $registro->departamento_id],
+            ['ap_materno' => $registro->ap_materno, 'telefono' =>$registro->telefono,'email' => $registro->email, 'role_id' =>$registro->role_id,'departamento_id' => $registro->departamento_id],
         );
 
         $registro->delete();

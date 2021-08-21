@@ -27,6 +27,12 @@ class Departamento extends Model
     }
 
     //Relación uno a muchos
+    public function telecomunicacionesAtendidas(){
+    	return $this->hasMany('App\Models\TelecomunicacionAtendida');
+    }
+
+
+    //Relación uno a muchos
     public function verificaciones(){
     	return $this->hasMany('App\Models\Verificacion');
     }

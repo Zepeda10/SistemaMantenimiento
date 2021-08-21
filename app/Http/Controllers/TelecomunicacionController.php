@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Telecomunicacion;
 use App\Models\Departamento;
 use App\Models\User;
+use App\Models\TelecomunicacionAtendida;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class TelecomunicacionController extends Controller
 {
@@ -17,7 +19,7 @@ class TelecomunicacionController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->cargo=="Administrador"){
+        if(Auth::user()->role_id == 1 or Auth::user()->role_id == 4 or Auth::user()->role_id == 5){
             return view("admin.telecomunicaciones.index1"); 
         }else{
             return view("admin.telecomunicaciones.index2"); 
@@ -59,9 +61,18 @@ class TelecomunicacionController extends Controller
      * @param  \App\Models\Telecomunicacion  $telecomunicacion
      * @return \Illuminate\Http\Response
      */
-    public function show(Telecomunicacion $telecomunicacion)
+    public function show($id)
     {
-        //
+        $registro = Telecomunicacion::findOrFail($id);
+
+        $atendido = TelecomunicacionAtendida::updateOrCreate(
+            ['tipo' => $registro->tipo, 'aula' =>$registro->aula,'edificio' => $registro->edificio, 'problema' => $registro->problema],
+            ['departamento_id' => $registro->departamento_id, 'user_id' =>$registro->user_id],
+        );
+
+        $registro->delete();
+
+        return redirect()->route('telecomunicaciones.index');
     }
 
     /**
@@ -70,9 +81,16 @@ class TelecomunicacionController extends Controller
      * @param  \App\Models\Telecomunicacion  $telecomunicacion
      * @return \Illuminate\Http\Response
      */
-    public function edit(Telecomunicacion $telecomunicacion)
+    public function edit($id)
     {
-        //
+        $detalle = TelecomunicacionAtendida::findOrFail($id);
+        $data = [
+            'titulo' => 'Telecomunicación atendida',
+            'date' => date('m/d/Y')
+        ];
+    
+        return PDF::loadView("admin.telecomunicaciones.show_atendido",compact("detalle"), $data)
+            ->stream('atendido.pdf');
     }
 
     /**
@@ -184,6 +202,82 @@ class TelecomunicacionController extends Controller
         $departamentos = Departamento::all();
         $usuarios = User::all();
         return view("admin.telecomunicaciones.create_correo",compact("departamentos","usuarios")); 
+    }
+
+    public function verSolicitudes(){
+        return view("admin.telecomunicaciones.reportes"); 
+    }
+
+    public function verAtendidas(){
+        return view("admin.telecomunicaciones.lista"); 
+    }
+
+    public function atendidoCorreo(Request $request){
+        if($request){
+            $departamentos = Departamento::all();
+            $departamento = trim($request->get('departamento_id'));
+
+            if($departamento){
+                $datos = TelecomunicacionAtendida::where('departamento_id', '=', $departamento)
+                        ->where('tipo', 'correo')
+                        ->orderBy('id','asc')
+                        ->paginate(8);
+    
+                return view("admin.telecomunicaciones.atendido_correo",compact("datos","departamentos")); 
+
+            }else if(!$departamento or $departamento==0){
+                $datos = TelecomunicacionAtendida::where('tipo', 'correo')->paginate(8);
+                $departamentos = Departamento::all();
+               // return "dos";
+               return view("admin.telecomunicaciones.atendido_correo",compact("datos","departamentos")); 
+            }
+        }
+    }
+
+    public function atendidoInternet(Request $request){
+        if($request){
+            $departamentos = Departamento::all();
+            $departamento = trim($request->get('departamento_id'));
+
+            if($departamento){
+                $datos = TelecomunicacionAtendida::where('departamento_id', '=', $departamento)
+                        ->where('tipo', 'internet')
+                        ->orderBy('id','asc')
+                        ->paginate(8);
+    
+                return view("admin.telecomunicaciones.atendido_internet",compact("datos","departamentos")); 
+
+            }else if(!$departamento or $departamento==0){
+                $datos = TelecomunicacionAtendida::where('tipo', 'internet')->paginate(8);
+                $departamentos = Departamento::all();
+               // return "dos";
+               return view("admin.telecomunicaciones.atendido_internet",compact("datos","departamentos")); 
+            }
+            
+        }
+    }
+
+    public function atendidoTelefono(Request $request){
+        if($request){
+            $departamentos = Departamento::all();
+            $departamento = trim($request->get('departamento_id'));
+
+            if($departamento){
+                $datos = TelecomunicacionAtendida::where('departamento_id', '=', $departamento)
+                        ->where('tipo', 'telefono')
+                        ->orderBy('id','asc')
+                        ->paginate(8);
+    
+                return view("admin.telecomunicaciones.atendido_telefono",compact("datos","departamentos")); 
+
+            }else if(!$departamento or $departamento==0){
+                $datos = TelecomunicacionAtendida::where('tipo', 'telefono')->paginate(8);
+                $departamentos = Departamento::all();
+               // return "dos";
+               return view("admin.telecomunicaciones.atendido_telefono",compact("datos","departamentos")); 
+            }
+            
+        }
     }
 
 }

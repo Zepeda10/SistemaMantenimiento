@@ -94,7 +94,7 @@
 			<p class="d-inline" style="margin-left:5px;">Regresar</p>
 		</a>
     </button>
-    @if (Auth::user()->cargo=="Administrador")
+    @if (Auth::user()->role_id==1 or Auth::user()->role_id==4 or Auth::user()->role_id==5)
       <button class="boton-verde" style="margin-left:15px;">
           <a class="text-decoration-none text-white" href="{{route('cronograma.addfecha',1)}}">Actualizar fecha</a>
       </button>
