@@ -1,4 +1,4 @@
-@if (Auth::user()->role_id != 1)
+@if (Auth::user()->role_id != 1 and Auth::user()->role_id != 2 and Auth::user()->role_id != 4 and Auth::user()->role_id != 5)
 	<script>window.location = "/dashboard";</script>
 @endif
 

@@ -51,7 +51,7 @@
             </div>
              @endif
             <div class="card-group">
-            @if (Auth::user()->role_id == 1 or Auth::user()->role_id == 2)
+            @if (Auth::user()->role_id == 1 or Auth::user()->role_id == 2 or Auth::user()->role_id == 4 or Auth::user()->role_id == 5)
                 <div class="card border-0 contenido">
                     <a href="{{route('admin.preverificacion')}}">
                         <img src="/images/lista-trabajo.png" style="width: 150px;" alt="Card image cap">

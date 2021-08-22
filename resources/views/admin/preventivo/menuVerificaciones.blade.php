@@ -1,4 +1,4 @@
-@if (Auth::user()->role_id != 1 and Auth::user()->role_id != 2)
+@if (Auth::user()->role_id != 1 and Auth::user()->role_id != 2 and Auth::user()->role_id != 4 and Auth::user()->role_id != 5)
 	<script>window.location = "/dashboard";</script>
 @endif
 @extends('dashboard')
@@ -56,7 +56,26 @@
                     <div class="card-body" style="width: 210px;">
                         <h5 class="card-title text-center">Subir verificación</h5>
                     </div>
-                </div>  
+                </div> 
+                <div class="card border-0 contenido">
+                    <a href="{{route('verificaciones.index')}}">
+                        <img src="/images/lista-solicitudes.png" style="width: 150px;" alt="Card image cap">
+                    </a>
+                    <div class="card-body" style="width: 210px;">
+                        <h5 class="card-title text-center">Lista de verificaciones</h5>
+                    </div>
+                </div>    
+            </div>
+        @elseif (Auth::user()->role_id == 4 or Auth::user()->role_id == 5)
+            <div class="card-group mt-5">
+                <div class="card border-0 contenido">
+                    <a href="{{route('verificaciones.index')}}">
+                        <img src="/images/lista-solicitudes.png" style="width: 150px;" alt="Card image cap">
+                    </a>
+                    <div class="card-body" style="width: 210px;">
+                        <h5 class="card-title text-center">Lista de verificaciones</h5>
+                    </div>
+                </div>    
             </div>
         @endif
                       
