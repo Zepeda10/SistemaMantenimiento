@@ -40,7 +40,7 @@
             <a @if(request()->routeIs('solicitudes.index')) class="navbar-brand mr-auto text-white efecto" @else class="navbar-brand mr-auto text-white" @endif href="{{route('solicitudes.index')}}">Solicitudes de acceso</a>
         @endif
         
-        <a @if(request()->routeIs('dashboard')) class="navbar-brand mr-auto text-white efecto" @else class="navbar-brand mr-auto text-white" @endif href="{{route('dashboard')}}">{{Auth::user()->usuario}}</a>
+        <a @if(request()->routeIs('dashboard')) class="navbar-brand mr-auto text-white efecto" @else class="navbar-brand mr-auto text-white" @endif href="{{route('dashboard')}}"><span style="text-transform: uppercase;">{{Auth::user()->usuario}}</span></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
